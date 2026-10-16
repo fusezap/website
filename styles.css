@@ -43,8 +43,10 @@
   .hero-visual { position: relative; margin: 72px auto 0; width: min(720px, 92vw); aspect-ratio: 16 / 10; }
   .hero-visual .glow { position: absolute; inset: 8% 14%; border-radius: 50%; background: radial-gradient(closest-side, rgba(108,59,255,.28), rgba(108,59,255,0)); filter: blur(10px); }
   .hero-visual svg.big { position: absolute; left: 50%; top: 50%; width: 58%; transform: translate(-50%, -46%); overflow: visible; }
-  .pulse { stroke-dasharray: 26 220; stroke-dashoffset: 246; animation: pulse 2.6s cubic-bezier(.6,0,.4,1) infinite; }
-  @keyframes pulse { to { stroke-dashoffset: 0; } }
+  .current { stroke-dasharray: 0.01 10; opacity: .75; animation: current 1.8s linear infinite; filter: drop-shadow(0 0 1.2px rgba(255,214,120,.9)); }
+  @keyframes current { to { stroke-dashoffset: -10.01; } }
+  .hero-visual .glow { animation: breathe 5s ease-in-out infinite; }
+  @keyframes breathe { 0%, 100% { opacity: .75; transform: scale(.97); } 50% { opacity: 1; transform: scale(1.03); } }
   .tag { position: absolute; background: rgba(255,255,255,.9); backdrop-filter: blur(8px); border: 1px solid var(--line); border-radius: 14px; padding: 10px 16px; font-size: 14px; font-weight: 600; color: var(--text); box-shadow: 0 10px 30px -12px rgba(20,17,42,.25); white-space: nowrap; text-align: left; }
   .tag small { display: block; font-weight: 500; color: var(--grey); font-size: 12px; }
   .tag.t1 { left: 0; top: 18%; } .tag.t2 { right: -3%; top: 34%; } .tag.t3 { left: 6%; bottom: 8%; }
@@ -115,7 +117,7 @@
   @media (prefers-reduced-motion: reduce) {
     .reveal { opacity: 1; transform: none; transition: none; }
     .step, .vis, .progress i { transition: none; }
-    .flow, .pulse { animation: none; }
+    .flow, .current, .hero-visual .glow { animation: none; }
   }
 
 /* about page */
