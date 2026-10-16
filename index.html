@@ -5,158 +5,213 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FuseZap — Fast AI inference on any chip</title>
 <meta name="description" content="FuseZap makes new AI chips ready for today’s language models: fast, standard, and production-ready from day one. A Techyodl product.">
+<meta name="theme-color" content="#FFFFFF">
+<meta property="og:type" content="website">
 <meta property="og:title" content="FuseZap — Fast AI inference on any chip">
 <meta property="og:description" content="Make your AI chip ready for today’s language models. Now onboarding design partners.">
 <meta property="og:url" content="https://fusezap.ai">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23F2B705' d='M13 2 3 14h7l-1 8 10-12h-7z'/%3E%3C/svg%3E">
+<meta property="og:image" content="https://fusezap.ai/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://fusezap.ai/og.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;600&family=JetBrains+Mono:wght@500&display=swap">
-<style>
-  :root {
-    --ink: #14161F; --ink-2: #1E2130; --line-d: #343846;
-    --paper: #F5F3EC; --paper-2: #FFFDF7; --line-l: #E2DED2;
-    --amber: #F2B705; --blue: #2F5BEA;
-    --text-l: #4A4F5C; --text-d: #C9CCD6;
-    --display: 'Space Grotesk', Arial, sans-serif;
-    --body: 'IBM Plex Sans', Arial, sans-serif;
-    --mono: 'JetBrains Mono', 'Courier New', monospace;
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { margin: 0; font-family: var(--body); font-size: 18px; line-height: 1.55; color: var(--ink); background: var(--paper); }
-  a { color: inherit; }
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
-  .eyebrow { font-family: var(--mono); font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: var(--blue); margin: 0 0 16px; }
-  h1, h2, h3 { font-family: var(--display); margin: 0; line-height: 1.1; }
-  h2 { font-size: clamp(32px, 4.5vw, 52px); letter-spacing: -1px; margin-bottom: 20px; }
-  h3 { font-size: 24px; margin-bottom: 10px; }
-  section { padding: 104px 0; }
-  .dark { background: var(--ink); color: var(--paper); }
-  .dark .eyebrow { color: var(--amber); }
-  .dark p.lead { color: var(--text-d); }
-  p.lead { font-size: 21px; color: var(--text-l); max-width: 720px; margin: 0; }
-
-  nav { position: sticky; top: 0; z-index: 10; background: rgba(20,22,31,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line-d); }
-  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-  .logo { display: flex; align-items: center; gap: 8px; font-family: var(--display); font-weight: 700; font-size: 22px; color: var(--paper); text-decoration: none; }
-  .logo svg { width: 22px; height: 22px; }
-  .btn { display: inline-block; background: var(--amber); color: var(--ink); font-weight: 600; text-decoration: none; padding: 14px 24px; border-radius: 10px; font-size: 17px; }
-  .btn:hover { filter: brightness(1.08); }
-  nav .btn { padding: 9px 16px; font-size: 15px; }
-
-  .hero { padding: 140px 0 128px; position: relative; overflow: hidden; }
-  .hero::after { content: ""; position: absolute; right: -120px; top: -80px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(242,183,5,.18), rgba(20,22,31,0) 70%); pointer-events: none; }
-  .hero h1 { font-size: clamp(48px, 8.5vw, 104px); letter-spacing: -2.5px; max-width: 920px; }
-  .hero h1 span { color: var(--amber); }
-  .hero p.lead { margin-top: 28px; font-size: 23px; }
-  .hero .cta { margin-top: 44px; }
-  .tag { display: inline-block; font-family: var(--mono); font-size: 13px; color: var(--amber); border: 1px solid var(--line-d); border-radius: 999px; padding: 6px 14px; margin-bottom: 28px; }
-
-  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 52px; }
-  .card { background: var(--paper-2); border: 1px solid var(--line-l); border-radius: 18px; padding: 36px; }
-  .card svg { width: 36px; height: 36px; margin-bottom: 18px; }
-  .card p { margin: 0; color: var(--text-l); }
-
-  .split { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
-  .checks { list-style: none; margin: 0; padding: 0; }
-  .checks li { display: flex; gap: 14px; padding: 18px 0; border-top: 1px solid var(--line-d); color: var(--text-d); font-size: 19px; }
-  .checks li:last-child { border-bottom: 1px solid var(--line-d); }
-  .checks b { color: var(--paper); font-weight: 600; }
-  .checks svg { flex: none; width: 24px; height: 24px; margin-top: 3px; }
-
-  .partner { text-align: center; }
-  .partner p.lead { margin: 0 auto; }
-  .partner .btn { margin-top: 36px; }
-
-  footer { background: var(--ink); color: var(--text-d); padding: 40px 0; font-size: 15px; border-top: 1px solid var(--line-d); }
-  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-  footer a { color: var(--paper); }
-
-  @media (max-width: 900px) {
-    .grid3, .split { grid-template-columns: 1fr; }
-    section { padding: 76px 0; }
-    .hero { padding: 96px 0 88px; }
-  }
-</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="fzFire" gradientUnits="userSpaceOnUse" x1="0" y1="4" x2="0" y2="96"><stop offset="0" stop-color="#FFB703"/><stop offset=".5" stop-color="#FB8500"/><stop offset="1" stop-color="#F4442E"/></linearGradient>
+    <linearGradient id="fzFire2" gradientUnits="userSpaceOnUse" x1="0" y1="18" x2="0" y2="82"><stop offset="0" stop-color="#FFB703"/><stop offset=".5" stop-color="#FB8500"/><stop offset="1" stop-color="#F4442E"/></linearGradient>
+    <symbol id="fz-mark" viewBox="0 0 100 100">
+      <rect x="18" y="18" width="64" height="64" rx="14" fill="#6C3BFF"/>
+      <path d="M34 4 L34 12 M66 4 L66 12 M34 88 L34 96 M66 88 L66 96 M4 34 L12 34 M4 50 L12 50 M4 66 L12 66 M88 34 L96 34 M88 50 L96 50 M88 66 L96 66" stroke="#6C3BFF" stroke-width="6" stroke-linecap="round" fill="none"/>
+      <path d="M58 4 L58 32 L40 52 L60 52 L42 72 L42 96" fill="none" stroke="url(#fzFire)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="58" cy="4" r="4" fill="#FFB703"/><circle cx="42" cy="96" r="4" fill="#F4442E"/>
+    </symbol>
+    <symbol id="ok" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" fill="none" stroke="#6C3BFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
 <nav>
   <div class="wrap">
-    <a class="logo" href="#top" aria-label="FuseZap home">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#F2B705" d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg>FuseZap
-    </a>
-    <a class="btn" href="#partners">Get early access</a>
+    <a class="brand" href="#top"><svg aria-hidden="true"><use href="#fz-mark"/></svg><img src="wordmark.svg" alt="FuseZap" width="75" height="17"></a>
+    <div class="menu" id="menu"><a href="#highlights">Overview</a><a href="#product">Product</a><a href="#fit">How it fits</a><a href="about.html">About</a><a href="#access">Get early access</a></div>
+    <a class="pill" href="#access">Get early access</a>
+    <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
   </div>
 </nav>
 
-<header class="hero dark" id="top">
+<header class="hero center" id="top">
   <div class="wrap">
-    <span class="tag">Now onboarding design partners</span>
-    <h1>Fast AI inference on <span>any</span> chip.</h1>
-    <p class="lead">FuseZap makes your AI chip ready for today’s language models: fast, standard, and production-ready from day one.</p>
-    <div class="cta"><a class="btn" href="#partners">Get early access</a></div>
+    <p class="name reveal">FuseZap</p>
+    <h1 class="reveal d1">Fast AI inference.<br><span>On any chip.</span></h1>
+    <p class="sub reveal d2">Your silicon, ready for today’s language models. Fast, standard, and production-ready from day one.</p>
+    <div class="links reveal d3">
+      <a class="pill" href="#access">Get early access</a>
+      <a class="more" href="#product">See the product ›</a>
+    </div>
+  </div>
+  <div class="hero-visual reveal d4" role="img" aria-label="The FuseZap chip mark with an animated signal running along its circuit trace">
+    <div class="glow"></div>
+    <svg class="big" viewBox="0 0 100 100" aria-hidden="true">
+      <rect x="18" y="18" width="64" height="64" rx="14" fill="#6C3BFF"/>
+      <path d="M34 4 L34 12 M66 4 L66 12 M34 88 L34 96 M66 88 L66 96 M4 34 L12 34 M4 50 L12 50 M4 66 L12 66 M88 34 L96 34 M88 50 L96 50 M88 66 L96 66" stroke="#6C3BFF" stroke-width="6" stroke-linecap="round" fill="none"/>
+      <path d="M58 4 L58 32 L40 52 L60 52 L42 72 L42 96" fill="none" stroke="url(#fzFire)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="pulse" d="M58 4 L58 32 L40 52 L60 52 L42 72 L42 96" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+      <circle cx="58" cy="4" r="4" fill="#FFB703"/><circle cx="42" cy="96" r="4" fill="#F4442E"/>
+    </svg>
+    <div class="tag t1">OpenAI-compatible<small>Your customers’ apps just work</small></div>
+    <div class="tag t2">Always current<small>New models as they ship</small></div>
+    <div class="tag t3">Verified<small>Checked against references</small></div>
   </div>
 </header>
 
-<section id="product">
+<section class="alt" id="highlights">
   <div class="wrap">
-    <p class="eyebrow">Why FuseZap</p>
-    <h2>Your silicon. Every model. Right away.</h2>
-    <p class="lead">Spend your time on the chip. We make sure customers can run the models they want on it, the way they already run them.</p>
-    <div class="grid3">
-      <div class="card">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#2F5BEA" d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg>
-        <h3>Fast to market</h3>
-        <p>Go from silicon to serving popular open models in a fraction of the usual time.</p>
+    <div class="center">
+      <p class="kicker reveal">Why FuseZap</p>
+      <h2 class="headline reveal d1">Your silicon. Every model.<br>Right away.</h2>
+    </div>
+    <div class="bento">
+      <div class="tile w4 violet reveal">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        <div><h3>Fast to market.</h3><p>Go from silicon to serving popular open models in a fraction of the usual time.</p></div>
       </div>
-      <div class="card">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#2F5BEA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 12h4l3-8 2 16 3-8h4"/></svg>
-        <h3>Always current</h3>
-        <p>New open models land on your chip as they’re released, not quarters later.</p>
+      <div class="tile w2 reveal d1">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7M21 4v5h-5" fill="none" stroke="#6C3BFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><h3>Always current.</h3><p>New open models land on your chip as they’re released.</p></div>
       </div>
-      <div class="card">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#2F5BEA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M20 6 9 17l-5-5"/></svg>
-        <h3>Standard by default</h3>
-        <p>Customers connect with the tools and APIs they already use. No rewrites on their side.</p>
+      <div class="tile w3 reveal">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7 3 12l5 5M16 7l5 5-5 5" fill="none" stroke="#6C3BFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><h3>Standard by default.</h3><p>Customers use the tools and APIs they already know. No rewrites on their side.</p></div>
+      </div>
+      <div class="tile w3 reveal d1">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="#6C3BFF" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <div><h3>Keeps your stack.</h3><p>Works on top of the compiler and runtime you’ve already built.</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="dark" id="what">
-  <div class="wrap split">
-    <div>
-      <p class="eyebrow">The product</p>
-      <h2>Everything between your chip and your customer.</h2>
-      <p class="lead">FuseZap sits on top of your existing compiler and runtime and delivers a complete, production-grade inference experience.</p>
-    </div>
-    <ul class="checks">
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#F2B705" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M20 6 9 17l-5-5"/></svg><span><b>OpenAI-compatible API</b>, ready for existing apps and SDKs</span></li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#F2B705" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M20 6 9 17l-5-5"/></svg><span><b>High throughput</b> for many concurrent users</span></li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#F2B705" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M20 6 9 17l-5-5"/></svg><span><b>Long context</b> without running out of memory</span></li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#F2B705" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M20 6 9 17l-5-5"/></svg><span><b>Efficient formats</b> that get more out of every watt</span></li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#F2B705" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M20 6 9 17l-5-5"/></svg><span><b>Verified accuracy</b>, with results you can share with your customers</span></li>
-    </ul>
+<section id="product" style="padding-bottom: 40px">
+  <div class="wrap center">
+    <p class="kicker reveal">The product</p>
+    <h2 class="headline reveal d1">Everything between your chip<br>and your customer.</h2>
+    <p class="sub reveal d2">A complete, production-grade inference experience on top of your existing compiler and runtime.</p>
   </div>
 </section>
 
-<section id="partners">
-  <div class="wrap partner">
-    <p class="eyebrow">Early access</p>
-    <h2>Building an AI chip? Let’s talk.</h2>
-    <p class="lead">We’re partnering with a small number of chip makers to bring their hardware to market faster. Design partners get hands-on support at no cost.</p>
-    <a class="btn" href="mailto:tgpromod@techyodl.ai?subject=FuseZap%20early%20access">Get early access</a>
+<section class="scrolly" aria-label="Product capabilities" style="padding: 0">
+  <div class="stage">
+    <div class="wrap stage-grid">
+      <div class="texts">
+        <div class="step active" data-i="0"><p class="num">01</p><h3>OpenAI-compatible API.</h3><p>Your customers point the apps and SDKs they already use at your chip. Streaming included. Nothing to rewrite.</p></div>
+        <div class="step" data-i="1"><p class="num">02</p><h3>High throughput.</h3><p>Many users at once, served efficiently, so every chip stays busy doing useful work.</p></div>
+        <div class="step" data-i="2"><p class="num">03</p><h3>Long context.</h3><p>Large documents and long conversations, without running out of memory.</p></div>
+        <div class="step" data-i="3"><p class="num">04</p><h3>Efficient formats.</h3><p>Compact number formats that get more out of every watt and every byte, with accuracy measured, not assumed.</p></div>
+        <div class="step" data-i="4"><p class="num">05</p><h3>Verified accuracy.</h3><p>Results checked against reference implementations, with reports you can share with your customers.</p></div>
+        <div class="progress" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <div class="visuals" aria-hidden="true">
+        <div class="vis active" data-i="0">
+          <div class="code"><span class="c"># Same API, your silicon</span>
+<span class="k">from</span> openai <span class="k">import</span> OpenAI
+client = OpenAI(
+  base_url=<span class="s">"http://your-chip/v1"</span>)
+client.chat.completions.create(
+  model=<span class="s">"qwen2.5-7b-instruct"</span>,
+  messages=[...], stream=<span class="k">True</span>)</div>
+        </div>
+        <div class="vis" data-i="1">
+          <svg viewBox="0 0 400 300"><g stroke="#6C3BFF" stroke-width="6" stroke-linecap="round" fill="none" opacity=".9"><path class="flow" d="M20 40 C150 40 170 150 250 150"/><path class="flow" d="M20 95 C150 95 170 150 250 150"/><path class="flow" d="M20 150 L250 150"/><path class="flow" d="M20 205 C150 205 170 150 250 150"/><path class="flow" d="M20 260 C150 260 170 150 250 150"/></g><g transform="translate(228 70) scale(1.6)"><rect x="18" y="18" width="64" height="64" rx="14" fill="#6C3BFF"/><path d="M58 18 L58 32 L40 52 L60 52 L42 72 L42 82" fill="none" stroke="url(#fzFire2)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></g></svg>
+        </div>
+        <div class="vis" data-i="2">
+          <div class="ctx"><div class="doc"></div><div class="doc"></div><div class="doc"></div><div class="doc"></div><div class="doc"></div><div class="doc"></div><div class="doc"></div><div class="doc"></div></div>
+        </div>
+        <div class="vis" data-i="3">
+          <div class="bits"><div><span style="width:100%"></span><b>16-bit</b></div><div><span style="width:50%"></span><b>8-bit</b></div><div><span style="width:25%"></span><b>4-bit</b></div></div>
+        </div>
+        <div class="vis" data-i="4">
+          <div class="report"><p class="rt">Conformance report</p><p><svg aria-hidden="true"><use href="#ok"/></svg>Matches reference outputs</p><p><svg aria-hidden="true"><use href="#ok"/></svg>Every operation tested</p><p><svg aria-hidden="true"><use href="#ok"/></svg>Accuracy per format measured</p><p><svg aria-hidden="true"><use href="#ok"/></svg>Shareable with your customers</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="fit">
+  <div class="wrap center">
+    <p class="kicker reveal">How it fits</p>
+    <h2 class="headline reveal d1">Built on your stack.<br>Not instead of it.</h2>
+    <p class="sub reveal d2">Keep the compiler and runtime you’ve invested in. FuseZap adds the serving layer your customers expect.</p>
+    <div class="stack" role="list">
+      <div class="layer reveal" role="listitem">Your customers’ apps<span>Existing tools and SDKs</span></div>
+      <div class="layer fz reveal d1" role="listitem">FuseZap<span>Serving, models, APIs</span></div>
+      <div class="layer reveal d2" role="listitem">Your compiler and runtime<span>Unchanged</span></div>
+      <div class="layer reveal d3" role="listitem">Your silicon<span>Any AI chip</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="team">
+  <div class="wrap center">
+    <p class="kicker reveal">Team</p>
+    <h2 class="headline reveal d1">Built by Techyodl.</h2>
+    <div class="people">
+      <a class="person reveal" href="about.html#promod"><div class="avatar" aria-hidden="true">PG</div><h3>Promod Gangadharan</h3><p>Co-founder</p></a>
+      <a class="person reveal d1" href="about.html#amith"><div class="avatar" aria-hidden="true">AA</div><h3>Amith Amarnath</h3><p>Co-founder</p></a>
+    </div>
+    <div class="links reveal d2"><a class="more" href="about.html#founders">Meet the founders ›</a></div>
+  </div>
+</section>
+
+<section class="cta center" id="access">
+  <div class="wrap">
+    <h2 class="headline reveal">Building an AI chip?<br><span>Let’s talk.</span></h2>
+    <p class="sub reveal d1">We’re partnering with a small number of chip makers to bring their hardware to market faster. Design partners get hands-on support at no cost.</p>
+    <div class="links reveal d2">
+      <a class="pill" href="mailto:tgpromod@techyodl.ai?subject=FuseZap%20early%20access">Get early access</a>
+      <a class="more" href="mailto:tgpromod@techyodl.ai">tgpromod@techyodl.ai ›</a>
+    </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <span>© 2026 Techyodl. FuseZap is a Techyodl product.</span>
-    <span><a href="mailto:tgpromod@techyodl.ai">tgpromod@techyodl.ai</a></span>
+    <span>Copyright © 2026 Techyodl. All rights reserved. FuseZap is a Techyodl product.</span>
+    <a href="mailto:tgpromod@techyodl.ai">Contact</a>
   </div>
 </footer>
 
+<script>
+(() => {
+  const nav = document.querySelector('nav'), btn = nav.querySelector('.menu-btn');
+  btn.addEventListener('click', () => { const o = nav.classList.toggle('open'); btn.setAttribute('aria-expanded', o); btn.setAttribute('aria-label', o ? 'Close menu' : 'Open menu'); });
+  nav.querySelectorAll('.menu a').forEach(a => a.addEventListener('click', () => { nav.classList.remove('open'); btn.setAttribute('aria-expanded', false); }));
+  const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  const sec = document.querySelector('.scrolly');
+  const steps = [...sec.querySelectorAll('.step')], vis = [...sec.querySelectorAll('.vis')], bars = [...sec.querySelectorAll('.progress i')];
+  let cur = 0;
+  const update = () => {
+    const r = sec.getBoundingClientRect(), span = sec.offsetHeight - innerHeight;
+    const i = Math.floor(Math.min(Math.max(-r.top / span, 0), 0.9999) * steps.length);
+    if (i === cur) return;
+    cur = i;
+    steps.forEach((el, k) => el.classList.toggle('active', k === i));
+    vis.forEach((el, k) => el.classList.toggle('active', k === i));
+    bars.forEach((el, k) => el.classList.toggle('on', k <= i));
+  };
+  addEventListener('scroll', update, { passive: true });
+  addEventListener('resize', update);
+  update();
+})();
+</script>
 </body>
 </html>
