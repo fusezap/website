@@ -51,7 +51,7 @@
     <p class="sub reveal d2">You built the chip. We get today’s open models running on it, behind the same API your customers already use.</p>
     <div class="links reveal d3">
       <a class="pill" href="#access">Get early access</a>
-      <a class="more" href="#film">Watch the 50-second film ›</a>
+      <a class="more" href="#film" data-watch>Watch a chip come alive ›</a>
     </div>
   </div>
   <div class="hero-visual reveal d4" role="img" aria-label="The FuseZap chip mark with an animated signal running along its circuit trace">
@@ -241,6 +241,16 @@ client.chat.completions.create(
   v.addEventListener('ended', () => { done = true; sync(); });
   b.addEventListener('click', () => { user = true; v.paused ? v.play() : v.pause(); });
   document.getElementById('filmr').addEventListener('click', () => { user = false; v.currentTime = 0; v.play().catch(() => {}); });
+  document.querySelectorAll('[data-watch]').forEach(a => a.addEventListener('click', (e) => {
+    e.preventDefault();
+    const box = v.parentElement, navH = (document.querySelector('nav') || {}).offsetHeight || 0;
+    let top = 0; for (let el = box; el; el = el.offsetParent) top += el.offsetTop;
+    const room = innerHeight - navH, hgt = box.offsetHeight;
+    const y = top - navH - Math.max(0, (room - hgt) / 2);
+    scrollTo({ top: y, behavior: still ? 'auto' : 'smooth' });
+    history.replaceState(null, '', '#film');
+    user = false; done = false; if (v.ended) v.currentTime = 0; v.play().catch(() => {});
+  }));
   if (still) { sync(); return; }
   new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting && !user && !done) v.play().catch(() => {}); else if (!e.isIntersecting && !v.ended) v.pause();
