@@ -15,10 +15,8 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="styles.css?v=202610161613">
+<link rel="preload" href="fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css?v=202610161745">
 </head>
 <body>
 
@@ -37,7 +35,7 @@
 <nav>
   <div class="wrap">
     <a class="brand" href="index.html"><svg aria-hidden="true"><use href="#fz-mark"/></svg><img src="wordmark.svg" alt="FuseZap" width="75" height="17"></a>
-    <div class="menu" id="menu"><a href="index.html#highlights">Overview</a><a href="index.html#product">Product</a><a href="index.html#fit">How it fits</a><a href="about.html" aria-current="page" style="color:#1D1D1F">About</a><a href="#access">Get early access</a></div>
+    <div class="menu" id="menu"><a href="index.html#highlights">Overview</a><a href="index.html#product">Product</a><a href="index.html#fit">How it fits</a><a href="about.html" aria-current="page" style="color:#1D1D1F">About</a><a class="menu-cta" href="#access">Get early access</a></div>
     <a class="pill" href="#access">Get early access</a>
     <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
   </div>
@@ -122,7 +120,7 @@
 <footer>
   <div class="wrap">
     <span>Copyright © 2026 Techyodl. All rights reserved. FuseZap is a Techyodl product.</span>
-    <a href="mailto:tgpromod@techyodl.ai">Contact</a>
+    <div class="legal-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="mailto:tgpromod@techyodl.ai">Contact</a></div>
   </div>
 </footer>
 

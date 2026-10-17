@@ -1,3 +1,5 @@
+@font-face { font-family: 'Plus Jakarta Sans'; font-style: normal; font-weight: 400 800; font-display: swap; src: url(fonts/plus-jakarta-sans-latin.woff2) format('woff2'); }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 500; font-display: swap; src: url(fonts/jetbrains-mono-latin.woff2) format('woff2'); }
 :root {
     --violet: #6C3BFF; --violet-d: #5526E8; --violet-50: #F4F0FF; --violet-100: #E7DEFF;
     --ink: #14112A; --text: #1D1D1F; --grey: #6E6E73; --line: #E3E3E8;
@@ -225,7 +227,24 @@ nav.open .menu-btn span:nth-child(2) { top: 19px; transform: rotate(-45deg); }
   .about-hero { padding: 72px 0 64px; }
   footer .wrap { flex-direction: column; align-items: flex-start; }
 }
-@media (min-width: 860px) { nav .menu a[href="#access"] { display: none; } }
+@media (min-width: 860px) { nav .menu .menu-cta { display: none; } }
 #founders, .founder { scroll-margin-top: 72px; }
 .founder .bio .edu { font-size: 16px; color: var(--grey); margin: 6px 0 0; padding-top: 16px; border-top: 1px solid var(--line); }
 .founder .bio .edu b { color: var(--text); font-weight: 700; margin-right: 10px; }
+
+/* ---------- footer ---------- */
+footer .wrap { align-items: center; }
+footer nav.legal-links, footer .legal-links { display: flex; gap: 22px; flex-wrap: wrap; position: static; height: auto; background: none; backdrop-filter: none; border: 0; }
+footer .legal-links a { color: var(--grey); }
+footer .legal-links a:hover { color: var(--text); text-decoration: underline; }
+
+/* ---------- legal pages ---------- */
+.legal { padding: 96px 0 120px; }
+.legal .wrap { max-width: 760px; }
+.legal h1 { font-size: clamp(40px, 6vw, 64px); line-height: 1.05; margin-bottom: 12px; }
+.legal .updated { color: var(--grey); font-size: 15px; margin: 0 0 48px; }
+.legal h2 { font-size: 24px; margin: 44px 0 12px; letter-spacing: -0.01em; }
+.legal p, .legal li { font-size: 17px; line-height: 1.7; color: #3A3A3F; }
+.legal ul { padding-left: 22px; }
+.legal a { color: var(--violet-d); text-decoration: underline; }
+@media (max-width: 767px) { .legal { padding: 64px 0 88px; } }

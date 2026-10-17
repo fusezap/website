@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terms of Use — FuseZap</title>
+<meta name="description" content="Terms for using fusezap.ai, operated by Techyodl.">
+<meta name="theme-color" content="#FFFFFF">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Terms of Use — FuseZap">
+<meta property="og:description" content="Terms for using fusezap.ai, operated by Techyodl.">
+<meta property="og:url" content="https://fusezap.ai/terms.html">
+<meta property="og:image" content="https://fusezap.ai/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css?v=202610161745">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="fzFire" gradientUnits="userSpaceOnUse" x1="0" y1="4" x2="0" y2="96"><stop offset="0" stop-color="#FFB703"/><stop offset=".5" stop-color="#FB8500"/><stop offset="1" stop-color="#F4442E"/></linearGradient>
+    <symbol id="fz-mark" viewBox="0 0 100 100">
+      <rect x="18" y="18" width="64" height="64" rx="14" fill="#6C3BFF"/>
+      <path d="M34 4 L34 12 M66 4 L66 12 M34 88 L34 96 M66 88 L66 96 M4 34 L12 34 M4 50 L12 50 M4 66 L12 66 M88 34 L96 34 M88 50 L96 50 M88 66 L96 66" stroke="#6C3BFF" stroke-width="6" stroke-linecap="round" fill="none"/>
+      <path d="M58 4 L58 32 L40 52 L60 52 L42 72 L42 96" fill="none" stroke="url(#fzFire)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="58" cy="4" r="4" fill="#FFB703"/><circle cx="42" cy="96" r="4" fill="#F4442E"/>
+    </symbol>
+  </defs>
+</svg>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html"><svg aria-hidden="true"><use href="#fz-mark"/></svg><img src="wordmark.svg" alt="FuseZap" width="75" height="17"></a>
+    <div class="menu" id="menu"><a href="index.html#highlights">Overview</a><a href="index.html#product">Product</a><a href="index.html#fit">How it fits</a><a href="about.html">About</a><a class="menu-cta" href="mailto:tgpromod@techyodl.ai?subject=FuseZap%20early%20access">Get early access</a></div>
+    <a class="pill" href="mailto:tgpromod@techyodl.ai?subject=FuseZap%20early%20access">Get early access</a>
+    <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+  </div>
+</nav>
+
+<main class="legal">
+  <div class="wrap">
+    <h1>Terms of Use</h1>
+    <p class="updated">Last updated: October 16, 2026</p>
+
+    <p>These terms apply to your use of fusezap.ai, operated by Techyodl (“we”, “us”). By using the site, you agree to them.</p>
+
+    <h2>Information only</h2>
+    <p>This website describes FuseZap, a product in active development. Content is provided for general information and may change without notice. Descriptions of features, capabilities and timelines are forward-looking and are not commitments. Nothing on this site is an offer or a binding agreement. Any design partnership, pilot or commercial relationship is governed only by a separate written agreement.</p>
+
+    <h2>Intellectual property</h2>
+    <p>The FuseZap name, logo, website design and content are owned by Techyodl. You may view and share pages from this site for your own non-commercial or evaluation purposes. You may not copy, modify or use our name, logo or content to suggest an affiliation or endorsement without our written permission.</p>
+
+    <h2>Acceptable use</h2>
+    <p>Do not misuse the site, for example by attempting to disrupt it, access it without authorization, or use automated means to overload it.</p>
+
+    <h2>Links to other sites</h2>
+    <p>The site may link to third-party websites. We are not responsible for their content or practices.</p>
+
+    <h2>No warranties</h2>
+    <p>The site is provided “as is” and “as available”, without warranties of any kind, express or implied, including accuracy, fitness for a particular purpose and non-infringement.</p>
+
+    <h2>Limitation of liability</h2>
+    <p>To the fullest extent permitted by law, Techyodl is not liable for any indirect, incidental, special or consequential damages, or any loss of data, revenue or profits, arising from your use of the site.</p>
+
+    <h2>Changes</h2>
+    <p>We may update these terms from time to time. The date at the top shows when they last changed. Continued use of the site means you accept the updated terms.</p>
+
+    <h2>Contact</h2>
+    <p>Questions about these terms: <a href="mailto:tgpromod@techyodl.ai">tgpromod@techyodl.ai</a></p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Copyright © 2026 Techyodl. All rights reserved. FuseZap is a Techyodl product.</span>
+    <div class="legal-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="mailto:tgpromod@techyodl.ai">Contact</a></div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const nav = document.querySelector('nav'), btn = nav.querySelector('.menu-btn');
+  btn.addEventListener('click', () => { const o = nav.classList.toggle('open'); btn.setAttribute('aria-expanded', o); btn.setAttribute('aria-label', o ? 'Close menu' : 'Open menu'); });
+  nav.querySelectorAll('.menu a').forEach(a => a.addEventListener('click', () => { nav.classList.remove('open'); btn.setAttribute('aria-expanded', false); }));
+  const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>
