@@ -75,7 +75,7 @@
     <h2 class="headline reveal d1">Under a minute.<br>No slides.</h2>
     <p class="sub reveal d2">How FuseZap takes a brand-new chip from “can’t run it” to serving today’s models, in six steps.</p>
     <div class="film reveal">
-      <video id="filmv" src="media/fusezap-film.mp4" poster="media/fusezap-film-poster.jpg" muted playsinline loop preload="metadata" aria-label="Film in six chapters: FuseZap reads a model as a graph, fuses its steps into kernels, maps them onto a chip, tunes them, verifies the results against a reference and serves them through an OpenAI-compatible API. Ends with results measured on Apple silicon."></video>
+      <video id="filmv" src="media/fusezap-film.mp4" poster="media/fusezap-film-poster.jpg" muted playsinline preload="metadata" aria-label="Film in six chapters: FuseZap reads a model as a graph, fuses its steps into kernels, maps them onto a chip, tunes them, verifies the results against a reference and serves them through an OpenAI-compatible API. Ends with results measured on Apple silicon."></video>
       <div class="film-ctl">
         <button class="film-btn" id="filmr" aria-label="Restart video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M4 3.5v4.8h4.8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <button class="film-btn" id="filmb" aria-label="Pause video"><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.2" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1.2" fill="currentColor"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z" fill="currentColor"/></svg></button>
@@ -235,14 +235,15 @@ client.chat.completions.create(
   const v = document.getElementById('filmv'), b = document.getElementById('filmb');
   if (!v) return;
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let user = false;
+  let user = false, done = false;
   const sync = () => { const on = !v.paused; b.classList.toggle('paused', !on); b.setAttribute('aria-label', on ? 'Pause video' : 'Play video'); };
   v.addEventListener('play', sync); v.addEventListener('pause', sync);
+  v.addEventListener('ended', () => { done = true; sync(); });
   b.addEventListener('click', () => { user = true; v.paused ? v.play() : v.pause(); });
   document.getElementById('filmr').addEventListener('click', () => { user = false; v.currentTime = 0; v.play().catch(() => {}); });
   if (still) { sync(); return; }
   new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting && !user) v.play().catch(() => {}); else if (!e.isIntersecting) v.pause();
+    if (e.isIntersecting && !user && !done) v.play().catch(() => {}); else if (!e.isIntersecting && !v.ended) v.pause();
   }), { threshold: 0.5 }).observe(v);
 })();
 </script>
