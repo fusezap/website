@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Engineering notes — FuseZap</title>
+<meta name="description" content="How FuseZap works under the hood, how we test it, what we have measured, and what is not done yet.">
+<meta name="theme-color" content="#FFFFFF">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Engineering notes — FuseZap">
+<meta property="og:description" content="How FuseZap works under the hood, how we test it, what we have measured, and what is not done yet.">
+<meta property="og:url" content="https://fusezap.ai/engineering.html">
+<meta property="og:image" content="https://fusezap.ai/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css?v=202610190900">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="fzFire" gradientUnits="userSpaceOnUse" x1="0" y1="4" x2="0" y2="96"><stop offset="0" stop-color="#FFB703"/><stop offset=".5" stop-color="#FB8500"/><stop offset="1" stop-color="#F4442E"/></linearGradient>
+    <symbol id="fz-mark" viewBox="0 0 100 100">
+      <rect x="18" y="18" width="64" height="64" rx="14" fill="#6C3BFF"/>
+      <path d="M34 4 L34 12 M66 4 L66 12 M34 88 L34 96 M66 88 L66 96 M4 34 L12 34 M4 50 L12 50 M4 66 L12 66 M88 34 L96 34 M88 50 L96 50 M88 66 L96 66" stroke="#6C3BFF" stroke-width="6" stroke-linecap="round" fill="none"/>
+      <path d="M58 4 L58 32 L40 52 L60 52 L42 72 L42 96" fill="none" stroke="url(#fzFire)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="58" cy="4" r="4" fill="#FFB703"/><circle cx="42" cy="96" r="4" fill="#F4442E"/>
+    </symbol>
+  </defs>
+</svg>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html"><svg aria-hidden="true"><use href="#fz-mark"/></svg><img src="wordmark.svg" alt="FuseZap" width="75" height="17"></a>
+    <div class="menu" id="menu"><a href="index.html#product">Product</a><a href="index.html#fit">Where it plugs in</a><a href="index.html#proof">Results</a><a href="engineering.html" aria-current="page" style="color:#1D1D1F">Engineering</a><a href="index.html#faq">FAQ</a><a href="about.html">About</a><a class="menu-cta" href="mailto:tgpromod@techyodl.ai?subject=FuseZap%20early%20access">Get early access</a></div>
+    <a class="pill" href="mailto:tgpromod@techyodl.ai?subject=FuseZap%20early%20access">Get early access</a>
+    <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+  </div>
+</nav>
+
+<main class="legal eng">
+  <div class="wrap">
+    <h1>Engineering notes</h1>
+    <p class="updated">Last updated October 2026. Written for compiler, runtime and ML-systems engineers.</p>
+
+    <p>This page says exactly what FuseZap is, what we have measured, and what isn’t done yet. If something here doesn’t match what you see when we work together, tell us.</p>
+
+    <h2>What FuseZap is</h2>
+    <p>FuseZap is a compiler and serving engine for LLM inference. A model is expressed in about 28 primitive operations. The compiler schedules and fuses them into kernels, generates source for the target, and tunes launch parameters with a beam search. The serving layer runs on top of whatever the compiler produces.</p>
+    <p>Porting to a new chip means writing one backend. A backend has four parts:</p>
+    <ul>
+      <li><b>Renderer:</b> turns our kernel IR into source in your kernel language (a C dialect, or an LLVM or MLIR-level entry point).</li>
+      <li><b>Compiler hook:</b> calls your toolchain to build that source into something your chip runs. Builds are cached on disk.</li>
+      <li><b>Runtime:</b> loads kernels and launches them through your driver API.</li>
+      <li><b>Allocator:</b> device memory through your driver.</li>
+    </ul>
+    <p>Tuned kernels you already have, such as matmul or attention, plug in through a custom-kernel hook and are called directly instead of generated. Everything above the backend is shared by every chip: the compiler passes, the model code, the serving engine and the tests.</p>
+
+    <h2>Correctness method</h2>
+    <ul>
+      <li><b>Operations:</b> every primitive and composed op is tested against NumPy and PyTorch on four execution tiers (a pure-Python interpreter, NumPy, compiled CPU and Metal).</li>
+      <li><b>Training parity:</b> a small GPT trains with losses matching PyTorch within 1e-4 on every tier.</li>
+      <li><b>Models:</b> Qwen2.5-0.5B-Instruct produces 64 greedy tokens identical to Hugging Face Transformers at FP32. Chat templates match Hugging Face for six tokenizers (Qwen2.5, Llama 3.0 to 3.2, Mistral and SmolLM2).</li>
+      <li><b>Batching:</b> 32 concurrent requests each produce tokens bit-identical to running alone, including under chunked prefill and preemption.</li>
+      <li><b>API:</b> the server is exercised with OpenAI’s official Python client, including streaming and concurrent streams.</li>
+    </ul>
+
+    <h2>Measured results (Apple M5 Max, October 2026)</h2>
+    <p>These are from hardware we own. They show that the stack works and is correct, not that it is fast on your chip.</p>
+    <table class="etable">
+      <thead><tr><th>Benchmark</th><th>FP32</th><th>FP16</th></tr></thead>
+      <tbody>
+        <tr><td>Decode, batch 1, 128-token prompt</td><td>137 tok/s</td><td>149 tok/s</td></tr>
+        <tr><td>Prefill, 512 tokens</td><td>4,821 tok/s</td><td>5,323 tok/s</td></tr>
+      </tbody>
+    </table>
+    <table class="etable">
+      <thead><tr><th>Continuous batching (FP32, 128 in / 128 out)</th><th>Batch 1</th><th>Batch 8</th><th>Batch 32</th></tr></thead>
+      <tbody>
+        <tr><td>Decode tok/s</td><td>52</td><td>409</td><td>1,427</td></tr>
+        <tr><td>Aggregate tok/s, prefill included</td><td>51</td><td>384</td><td>1,141</td></tr>
+      </tbody>
+    </table>
+    <table class="etable">
+      <thead><tr><th>Weights (WikiText-2, ctx 1024)</th><th>Scheme</th><th>Perplexity</th><th>vs FP16</th></tr></thead>
+      <tbody>
+        <tr><td>FP16</td><td>baseline</td><td>13.20</td><td>—</td></tr>
+        <tr><td>INT8</td><td>per-channel, symmetric, weight-only</td><td>13.17</td><td>−0.2%</td></tr>
+        <tr><td>FP8 E4M3</td><td>per-tensor scale, weight-only</td><td>13.27</td><td>+0.5%</td></tr>
+        <tr><td>INT4</td><td>group 128, round-to-nearest</td><td>15.71</td><td>+19.0%</td></tr>
+      </tbody>
+    </table>
+    <p>Naive INT4 is not usable on a 0.5B model. For 4-bit we import AWQ and GPTQ checkpoints (including act-order GPTQ), whose dequantization matches the reference implementations bit for bit. Quantization is weight-only today; activations stay in FP16.</p>
+
+    <h2>What isn’t done yet</h2>
+    <ul>
+      <li>No custom accelerator backend yet. Today: CPU and Apple Metal. NVIDIA CUDA is next; AMD HIP follows.</li>
+      <li>No published benchmark against vLLM yet. The harness and method are written; the H100 runs are next.</li>
+      <li>Larger models (7B and up), mixture-of-experts and multi-device sharding are not tested yet.</li>
+      <li>No prefix caching. Tool calls are rendered into the prompt but not parsed, and logprobs are not returned.</li>
+      <li>FP8 is weight-only; native FP8 matmul needs a backend with FP8 hardware.</li>
+    </ul>
+
+    <h2>Talk to us</h2>
+    <p>If you build an AI chip and want to see the code, the test logs or the benchmark method, write to <a href="mailto:tgpromod@techyodl.ai">tgpromod@techyodl.ai</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Copyright © 2026 Techyodl. All rights reserved. FuseZap is a Techyodl product.</span>
+    <div class="legal-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="mailto:tgpromod@techyodl.ai">Contact</a></div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const nav = document.querySelector('nav'), btn = nav.querySelector('.menu-btn');
+  btn.addEventListener('click', () => { const o = nav.classList.toggle('open'); btn.setAttribute('aria-expanded', o); btn.setAttribute('aria-label', o ? 'Close menu' : 'Open menu'); });
+  nav.querySelectorAll('.menu a').forEach(a => a.addEventListener('click', () => { nav.classList.remove('open'); btn.setAttribute('aria-expanded', false); }));
+  const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>

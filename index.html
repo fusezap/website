@@ -17,7 +17,7 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=202610181800">
+<link rel="stylesheet" href="styles.css?v=202610190900">
 </head>
 <body>
 
@@ -38,7 +38,7 @@
 <nav>
   <div class="wrap">
     <a class="brand" href="#top"><svg aria-hidden="true"><use href="#fz-mark"/></svg><img src="wordmark.svg" alt="FuseZap" width="75" height="17"></a>
-    <div class="menu" id="menu"><a href="#product">Product</a><a href="#proof">Proof</a><a href="#how">Working together</a><a href="#faq">FAQ</a><a href="about.html">About</a><a class="menu-cta" href="#access">Get early access</a></div>
+    <div class="menu" id="menu"><a href="#product">Product</a><a href="#fit">Where it plugs in</a><a href="#proof">Results</a><a href="engineering.html">Engineering</a><a href="#faq">FAQ</a><a href="about.html">About</a><a class="menu-cta" href="#access">Get early access</a></div>
     <a class="pill" href="#access">Get early access</a>
     <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
   </div>
@@ -78,7 +78,7 @@
     <div class="pains">
       <div class="pain reveal"><p class="q">“A new model came out last week. Customers are already asking if it runs on our chip.”</p><p>Two to four notable open models land every month. Each one is a new test.</p></div>
       <div class="pain reveal d1"><p class="q">“They want to run their own fine-tuned model, not the three we converted.”</p><p>Evaluators bring their own weights and expect the API they already use.</p></div>
-      <div class="pain reveal d2"><p class="q">“Our best compiler people are writing model glue instead of making the chip faster.”</p><p>An in-house serving team means 8 to 15 hard-to-hire engineers, every year.</p></div>
+      <div class="pain reveal d2"><p class="q">“Our best compiler people are writing model glue instead of making the chip faster.”</p><p>By our estimate, an in-house serving team is 8 to 15 hard-to-hire engineers, every year.</p></div>
     </div>
   </div>
 </section>
@@ -86,7 +86,7 @@
 <section id="film">
   <div class="wrap center">
     <p class="kicker reveal">See it work</p>
-    <h2 class="headline reveal d1">Under a minute.<br>No slides.</h2>
+    <h2 class="headline reveal d1">Watch a chip come alive<br>in under a minute.</h2>
     <p class="sub reveal d2">How FuseZap takes a brand-new chip from “can’t run it” to serving today’s models, in six steps.</p>
     <div class="film reveal">
       <video id="filmv" src="media/fusezap-film.mp4" poster="media/fusezap-film-poster.jpg" muted playsinline preload="metadata" aria-label="Film in six chapters: FuseZap reads a model as a graph, fuses its steps into kernels, maps them onto a chip, tunes them, verifies the results against a reference and serves them through an OpenAI-compatible API. Ends with results measured on Apple silicon."></video>
@@ -106,24 +106,24 @@
   <div class="wrap">
     <div class="center">
       <p class="kicker reveal">Why FuseZap</p>
-      <h2 class="headline reveal d1">Great chip.<br>Now it needs models.</h2>
+      <h2 class="headline reveal d1">Your chip is great.<br>Now it needs today’s models.</h2>
     </div>
     <div class="bento">
       <div class="tile w4 violet reveal">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linejoin="round"/></svg>
-        <div><h3>Get to market sooner.</h3><p>Skip the months it takes to build a model-serving layer yourself.</p></div>
+        <div><h3>Ship model support without building a serving team.</h3><p>Skip the year it takes to build an LLM serving stack in-house.</p></div>
       </div>
       <div class="tile w2 reveal d1">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7M21 4v5h-5" fill="none" stroke="#6C3BFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div><h3>Keep up with new models.</h3><p>When a popular open model comes out, we help get it running on your chip.</p></div>
+        <div><h3>Keep pace with new models.</h3><p>When a popular open model ships, we bring it up on your chip and test it.</p></div>
       </div>
       <div class="tile w3 reveal">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7 3 12l5 5M16 7l5 5-5 5" fill="none" stroke="#6C3BFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div><h3>Nothing new to learn.</h3><p>Your customers keep using the tools and APIs they already know.</p></div>
+        <div><h3>Your customers keep their code.</h3><p>They call your chip through the OpenAI API and SDKs they already use.</p></div>
       </div>
       <div class="tile w3 reveal d1">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="#6C3BFF" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <div><h3>Keep what you’ve built.</h3><p>FuseZap sits on top of your compiler and runtime. It doesn’t replace them.</p></div>
+        <div><h3>We build on your toolchain.</h3><p>Your kernel compiler, driver and tuned kernels stay. We add everything above them.</p></div>
       </div>
     </div>
   </div>
@@ -133,7 +133,7 @@
   <div class="wrap center">
     <p class="kicker reveal">The product</p>
     <h2 class="headline reveal d1">Everything between your chip<br>and your customer.</h2>
-    <p class="sub reveal d2">The pieces your customers expect, built on top of what you already have.</p>
+    <p class="sub reveal d2">The serving stack your customers expect, built on your chip’s low-level toolchain.</p>
   </div>
 </section>
 
@@ -141,11 +141,11 @@
   <div class="stage">
     <div class="wrap stage-grid">
       <div class="texts">
-        <div class="step active" data-i="0"><p class="num">01</p><h3>An API they already know.</h3><p>Customers point their existing apps and SDKs at your chip, streaming included. Nothing to rewrite.</p></div>
-        <div class="step" data-i="1"><p class="num">02</p><h3>Lots of users at once.</h3><p>Requests are batched together, so your chip spends its time on real work.</p></div>
-        <div class="step" data-i="2"><p class="num">03</p><h3>Long conversations.</h3><p>Long documents and chats, without running out of memory.</p></div>
-        <div class="step" data-i="3"><p class="num">04</p><h3>Smaller number formats.</h3><p>16, 8 and 4-bit formats get more out of every watt and byte. We measure what each one costs in accuracy instead of guessing.</p></div>
-        <div class="step" data-i="4"><p class="num">05</p><h3>Proof it’s right.</h3><p>We check results against reference implementations and give you a report you can share with your customers.</p></div>
+        <div class="step active" data-i="0"><p class="num">01</p><h3>An OpenAI-compatible API.</h3><p>Chat and completions endpoints with SSE streaming, stop strings, seeds and sampling controls, tested against OpenAI’s own Python client.</p></div>
+        <div class="step" data-i="1"><p class="num">02</p><h3>Continuous batching.</h3><p>Requests join and leave the batch every step, with chunked prefill and preemption. Each request’s tokens are bit-identical to running it alone.</p></div>
+        <div class="step" data-i="2"><p class="num">03</p><h3>Paged KV cache.</h3><p>Attention memory is allocated in fixed-size blocks, so long prompts and many users share memory without fragmenting it.</p></div>
+        <div class="step" data-i="3"><p class="num">04</p><h3>Quantization, measured.</h3><p>Per-channel INT8 and FP8 (E4M3) weights, and INT4 through AWQ and GPTQ checkpoints. We publish the perplexity of every format.</p></div>
+        <div class="step" data-i="4"><p class="num">05</p><h3>Conformance reports.</h3><p>Every operation and every model is checked against PyTorch and Hugging Face references, and you get a report you can share with customers.</p></div>
         <div class="progress" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
       </div>
       <div class="visuals" aria-hidden="true">
@@ -165,7 +165,7 @@ client.chat.completions.create(
           <div class="ctx"><div class="doc"></div><div class="doc"></div><div class="doc"></div><div class="doc"></div><div class="doc"></div><div class="doc"></div><div class="doc"></div><div class="doc"></div></div>
         </div>
         <div class="vis" data-i="3">
-          <div class="bits"><div><span style="width:100%"></span><b>16-bit</b></div><div><span style="width:50%"></span><b>8-bit</b></div><div><span style="width:25%"></span><b>4-bit</b></div></div>
+          <div class="bits"><div><span style="width:100%"></span><b>FP16</b></div><div><span style="width:50%"></span><b>INT8 · FP8</b></div><div><span style="width:25%"></span><b>INT4</b></div></div>
         </div>
         <div class="vis" data-i="4">
           <div class="report"><p class="rt">Conformance report</p><p><svg aria-hidden="true"><use href="#ok"/></svg>Matches reference outputs</p><p><svg aria-hidden="true"><use href="#ok"/></svg>Every operation tested</p><p><svg aria-hidden="true"><use href="#ok"/></svg>Accuracy per format measured</p><p><svg aria-hidden="true"><use href="#ok"/></svg>Shareable with your customers</p></div>
@@ -177,29 +177,55 @@ client.chat.completions.create(
 
 <section class="proof" id="proof">
   <div class="wrap center">
-    <p class="kicker reveal">Already running</p>
-    <h2 class="headline reveal d1">Not a slide.<br>Running code.</h2>
-    <p class="sub reveal d2">Measured this month on Apple silicon. NVIDIA and AMD are next. Then your chip.</p>
+    <p class="kicker reveal">What runs today</p>
+    <h2 class="headline reveal d1">We started with correctness,<br>on hardware we own.</h2>
+    <p class="sub reveal d2">Measured in October 2026 on an Apple M5 Max with Qwen2.5-0.5B-Instruct. That’s a small model on a friendly chip, so read this as proof the stack is right, not as a speed claim. H100 benchmarks against vLLM are next.</p>
     <div class="stats">
-      <div class="stat reveal"><b>Exact</b><span>Qwen2.5 output matches Hugging Face’s reference, token for token</span></div>
-      <div class="stat reveal d1"><b>1,430</b><span>tokens a second across 32 users at once, on one Apple M5 Max</span></div>
-      <div class="stat reveal d2"><b>No loss</b><span>in accuracy at 8-bit (perplexity −0.2% vs 16-bit)</span></div>
-      <div class="stat reveal d3"><b>5,739</b><span>automated tests passing on four kinds of hardware</span></div>
+      <div class="stat reveal"><b>Token-exact</b><span>64 greedy tokens identical to the Hugging Face reference at FP32</span></div>
+      <div class="stat reveal d1"><b>Batch-invariant</b><span>32 concurrent requests, each bit-identical to running alone</span></div>
+      <div class="stat reveal d2"><b>1,430 tok/s</b><span>decode throughput at 32 concurrent requests (1,140 with prefill)</span></div>
+      <div class="stat reveal d3"><b>5,739 tests</b><span>passing on four execution tiers: interpreter, NumPy, CPU and Metal</span></div>
     </div>
-    <p class="fine reveal">Qwen2.5-0.5B-Instruct, October 2026. Method and logs on request.</p>
+    <div class="qtable reveal">
+      <table>
+        <caption>Weight quantization on WikiText-2 (Qwen2.5-0.5B, context 1024, FP16 activations)</caption>
+        <thead><tr><th>Format</th><th>Scheme</th><th>Perplexity</th><th>vs FP16</th></tr></thead>
+        <tbody>
+          <tr><td>FP16</td><td>baseline</td><td>13.20</td><td>—</td></tr>
+          <tr><td>INT8</td><td>per-channel, symmetric</td><td>13.17</td><td>−0.2%</td></tr>
+          <tr><td>FP8 E4M3</td><td>per-tensor scale</td><td>13.27</td><td>+0.5%</td></tr>
+          <tr><td>INT4</td><td>group 128, round-to-nearest</td><td>15.71</td><td>+19.0%</td></tr>
+        </tbody>
+      </table>
+      <p>Naive INT4 hurts a model this small, so we don’t ship it that way. For 4-bit we load AWQ and GPTQ checkpoints. Their numbers come with the 7B benchmarks.</p>
+    </div>
+    <p class="fine reveal">Method, limits and what’s not done yet: <a href="engineering.html">Engineering notes ›</a></p>
   </div>
 </section>
 
 <section class="alt" id="fit">
   <div class="wrap center">
-    <p class="kicker reveal">How it fits</p>
-    <h2 class="headline reveal d1">On top of your stack.<br>Not instead of it.</h2>
-    <p class="sub reveal d2">You keep the compiler and runtime you’ve invested in. FuseZap adds the serving layer on top.</p>
+    <p class="kicker reveal">Where FuseZap plugs in</p>
+    <h2 class="headline reveal d1">You bring the toolchain.<br>We build everything above it.</h2>
+    <p class="sub reveal d2">A FuseZap backend for your chip is four small pieces. The compiler, the serving stack and the tests above it are shared by every chip we support.</p>
     <div class="stack" role="list">
-      <div class="layer reveal" role="listitem">Your customers’ apps<span>Existing tools and SDKs</span></div>
-      <div class="layer fz reveal d1" role="listitem">FuseZap<span>Serving, models, APIs</span></div>
-      <div class="layer reveal d2" role="listitem">Your compiler and runtime<span>Unchanged</span></div>
-      <div class="layer reveal d3" role="listitem">Your silicon<span>Any AI chip</span></div>
+      <div class="layer reveal" role="listitem">Your customers’ apps<span>OpenAI API and SDKs, unchanged</span></div>
+      <div class="layer fz reveal d1" role="listitem">FuseZap serving<span>API, batching, KV cache, quantization</span></div>
+      <div class="layer fz reveal d1" role="listitem">FuseZap compiler<span>Fusion, scheduling, kernel generation, tuning</span></div>
+      <div class="layer reveal d2" role="listitem">Your toolchain and driver<span>Kernel compiler, memory and launch API</span></div>
+      <div class="layer reveal d3" role="listitem">Your silicon<span>Any AI accelerator</span></div>
+    </div>
+    <div class="split">
+      <div class="reveal"><h3>You provide</h3><ul>
+        <li>A way to compile a kernel: your C, LLVM or MLIR-level toolchain</li>
+        <li>A driver API to allocate memory and launch work</li>
+        <li>Optionally, your tuned matmul and attention kernels, which we call directly</li>
+        <li>A dev board or remote access, under NDA</li></ul></div>
+      <div class="reveal d1"><h3>We provide</h3><ul>
+        <li>A backend for your chip: renderer, compiler hook, runtime and allocator</li>
+        <li>Fused, auto-tuned kernels for everything your libraries don’t cover</li>
+        <li>The serving stack and OpenAI-compatible API</li>
+        <li>Conformance tests and accuracy reports for every model and format</li></ul></div>
     </div>
   </div>
 </section>
@@ -208,13 +234,13 @@ client.chat.completions.create(
   <div class="wrap">
     <div class="center">
       <p class="kicker reveal">Working together</p>
-      <h2 class="headline reveal d1">What happens<br>after you say hello.</h2>
+      <h2 class="headline reveal d1">What happens<br>after you get in touch.</h2>
     </div>
     <ol class="journey">
-      <li class="reveal"><span>1</span><h3>A 20-minute call.</h3><p>You tell us about your chip, your toolchain and the models your customers ask for. No slides.</p></li>
-      <li class="reveal d1"><span>2</span><h3>Access, under NDA.</h3><p>You share your SDK and a dev board or remote access. Your designs stay with you.</p></li>
-      <li class="reveal d2"><span>3</span><h3>A first model, running.</h3><p>We bring up an open model on your chip behind the OpenAI API, with an accuracy report.</p></li>
-      <li class="reveal d3"><span>4</span><h3>Kept current.</h3><p>As new models land, we add them, test them and tell you what changed.</p></li>
+      <li class="reveal"><span>1</span><h3>We talk for 20 minutes.</h3><p>You tell us about your chip, your toolchain and the models your customers ask for.</p></li>
+      <li class="reveal d1"><span>2</span><h3>You give us access, under NDA.</h3><p>Your SDK and toolchain, and a dev board or remote access. Your designs stay with you.</p></li>
+      <li class="reveal d2"><span>3</span><h3>We run a conformance pass, then a first model.</h3><p>First we show exactly which operations your toolchain handles. Then an open model serves on your chip, with a report.</p></li>
+      <li class="reveal d3"><span>4</span><h3>We keep it current.</h3><p>As new models land, we add them, test them and tell you what changed.</p></li>
     </ol>
   </div>
 </section>
@@ -222,15 +248,16 @@ client.chat.completions.create(
 <section class="alt" id="faq">
   <div class="wrap">
     <div class="center">
-      <p class="kicker reveal">Questions chip makers ask us</p>
-      <h2 class="headline reveal d1">Straight answers.</h2>
+      <p class="kicker reveal">FAQ</p>
+      <h2 class="headline reveal d1">What chip software teams<br>ask us first.</h2>
     </div>
     <div class="faq reveal d2">
-      <details><summary>Do you replace our compiler or runtime?</summary><p>No. FuseZap sits on top of what you’ve built and uses it. Your team keeps owning the parts that make your chip special.</p></details>
+      <details><summary>Do you replace our compiler or runtime?</summary><p>Partly, so here’s exactly which part. We use your low-level toolchain and driver to compile and launch kernels, and we call any tuned kernels you already have. We replace the graph-level layers above them: fusion, scheduling, kernel generation and serving. Everything that touches your silicon directly stays yours.</p></details>
+      <details><summary>What if our toolchain can’t handle something?</summary><p>Then we find out in the first weeks, not at launch. A project starts with a conformance run that shows which operations, data types and shapes your toolchain handles. We generate kernels in your kernel language where we can, and flag clearly what needs your engineers.</p></details>
       <details><summary>How long does it take to get a model running?</summary><p>It depends on how mature your toolchain is. Our goal is weeks, not quarters, for a first model. After a first call, we’ll give you an honest estimate.</p></details>
       <details><summary>Who owns the code for our chip?</summary><p>You do. The code written for your chip is yours, and we can hand it over in full, with its tests, so your team can run it without us.</p></details>
       <details><summary>How do you protect our IP?</summary><p>We work under NDA, on your hardware or in your environment if you prefer. Nothing about your chip goes into work we do for anyone else.</p></details>
-      <details><summary>How do you prove it’s right?</summary><p>Every result is checked against a reference implementation. You get a report with matching outputs and the accuracy of each number format, which you can share with your customers.</p></details>
+      <details><summary>How do you prove it’s right?</summary><p>We compare against PyTorch and Hugging Face at every level: single operations, whole models token for token, and perplexity for every number format. You get the report, and the tests run in your CI too.</p></details>
       <details><summary>What does it cost?</summary><p>Right now we’re working with a few design partners free of charge. After that: a fixed price to bring a chip up, and a subscription to keep it current, well below the cost of an in-house team.</p></details>
     </div>
   </div>
