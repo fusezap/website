@@ -16,7 +16,7 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=202610191200">
+<link rel="stylesheet" href="styles.css?v=202610191900">
 </head>
 <body>
 
@@ -35,8 +35,8 @@
 <nav>
   <div class="wrap">
     <a class="brand" href="index.html"><svg aria-hidden="true"><use href="#fz-mark"/></svg><img src="wordmark.svg" alt="FuseZap" width="75" height="17"></a>
-    <div class="menu" id="menu"><a href="index.html#product">Product</a><a href="index.html#fit">Where it plugs in</a><a href="index.html#proof">Results</a><a href="engineering.html" aria-current="page" style="color:#1D1D1F">Engineering</a><a href="index.html#faq">FAQ</a><a href="about.html">About</a><a class="menu-cta" href="mailto:tgpromod@techyodl.ai?subject=FuseZap%20early%20access">Get early access</a></div>
-    <a class="pill" href="mailto:tgpromod@techyodl.ai?subject=FuseZap%20early%20access">Get early access</a>
+    <div class="menu" id="menu"><a href="index.html#product">Core</a><a href="index.html#validate">Validate</a><a href="index.html#fit">Where it plugs in</a><a href="index.html#proof">Results</a><a href="engineering.html" aria-current="page" style="color:#1D1D1F">Engineering</a><a href="index.html#faq">FAQ</a><a href="about.html">About</a><a class="menu-cta" href="mailto:tgpromod@techyodl.ai?subject=FuseZap%20compatibility%20assessment">Get an assessment</a></div>
+    <a class="pill" href="mailto:tgpromod@techyodl.ai?subject=FuseZap%20compatibility%20assessment">Get an assessment</a>
     <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
   </div>
 </nav>
@@ -44,7 +44,7 @@
 <main class="legal eng">
   <div class="wrap">
     <h1>Engineering notes</h1>
-    <p class="updated">Last updated October 2026. Written for compiler, runtime and ML-systems engineers.</p>
+    <p class="updated">Last updated 19 October 2026. Written for compiler, runtime and ML-systems engineers.</p>
 
     <p>This page says exactly what FuseZap is, what we have measured, and what isn’t done yet. If something here doesn’t match what you see when we work together, tell us.</p>
 
@@ -59,6 +59,28 @@
     </ul>
     <p>The backend only needs a way to compile a kernel and a way to launch it, so a functional simulator with the same interface works before silicon exists. On a simulator we prove correctness; performance tuning waits for real hardware.</p>
     <p>Tuned kernels you already have, such as matmul or attention, plug in through a custom-kernel hook and are called directly instead of generated. Everything above the backend is shared by every chip: the compiler passes, the model code, the serving engine and the tests.</p>
+
+    <h2 id="vllm">Why not a vLLM plugin?</h2>
+    <p>It’s a fair question, and for some teams a plugin is the right answer. vLLM’s hardware plugin interface gives you its scheduler, batching and API. What it doesn’t give you is the kernels. Your team still writes and tunes kernels for the operations each model uses, and every time a model introduces a new attention variant, activation or quantization format, that work starts again. You also follow vLLM’s internals, which change often.</p>
+    <p>FuseZap works one level lower. Models are built from about 28 primitive operations, and the compiler fuses and generates kernels for your chip from those, tuning them with a beam search. A new model is mostly a new combination of the same primitives, so it should need little or no new kernel work. Your tuned matmul and attention kernels still plug in where they’re faster.</p>
+    <p>That is a claim we intend to prove, not just make. On our first non-GPU accelerator (AWS Inferentia2, in progress) we’re recording how much backend code, time and money the first model takes, and then the second. We’ll publish both numbers here.</p>
+
+    <h2 id="contract">Hardware capability contract (v0)</h2>
+    <p>This is what a chip needs to offer for a FuseZap backend. It is a first version; the Inferentia2 port is testing it now, and we’ll version it as it changes.</p>
+    <table class="etable">
+      <thead><tr><th>Capability</th><th>Needed</th><th>Details</th></tr></thead>
+      <tbody>
+        <tr><td>Compile</td><td>Required</td><td>Turn generated kernel source (a C dialect, LLVM IR, MLIR or a Python tile language) into something a host process can load, at runtime or ahead of time.</td></tr>
+        <tr><td>Launch and wait</td><td>Required</td><td>Launch a kernel with buffer addresses and integer arguments, wait for it to finish, and time it.</td></tr>
+        <tr><td>Memory</td><td>Required</td><td>Allocate and free device buffers, and copy between host and device.</td></tr>
+        <tr><td>Data types</td><td>Required: float32, int32</td><td>float16 or bfloat16 for useful speed; int8 for quantized weights; FP8 where the hardware has it.</td></tr>
+        <tr><td>Operations</td><td>Required</td><td>Elementwise arithmetic and comparisons, exp2, log2, sqrt and sin, and sum and max along an axis. Integer division and modulo for indexing are emulated if missing.</td></tr>
+        <tr><td>Tuned kernels</td><td>Optional</td><td>Your matmul and attention kernels, called through our custom-kernel hook instead of generated ones.</td></tr>
+        <tr><td>Scratchpad and barriers</td><td>Optional</td><td>On-chip memory and synchronization, used by the generated kernels when available.</td></tr>
+        <tr><td>Multiple devices</td><td>Not yet</td><td>Collectives and sharding across chips are not part of v0.</td></tr>
+      </tbody>
+    </table>
+    <p>Real chips don’t always fit a clean interface. Inferentia2 already breaks a few of these assumptions: shapes are fixed when a kernel is compiled, its kernel language works on whole tiles rather than threads, and its compiler has to run in a separate process. We’ll publish every exception we hit, along with how we handled it.</p>
 
     <h2>Correctness method</h2>
     <ul>
@@ -96,9 +118,23 @@
     </table>
     <p>Naive INT4 is not usable on a 0.5B model. For 4-bit we import AWQ and GPTQ checkpoints (including act-order GPTQ), whose dequantization matches the reference implementations bit for bit. Quantization is weight-only today; activations stay in FP16.</p>
 
+    <h2 id="production">Production readiness</h2>
+    <p>FuseZap isn’t ready to run a large production fleet yet. Here’s where things stand.</p>
+    <table class="etable">
+      <thead><tr><th></th><th>What it covers</th></tr></thead>
+      <tbody>
+        <tr><td>Exists today</td><td>OpenAI-compatible server with streaming, continuous batching with preemption, per-request limits, a health endpoint, and correctness reports.</td></tr>
+        <tr><td>Comes from standard tools</td><td>Metrics and tracing through Prometheus and OpenTelemetry; authentication, rate limits and routing through an API gateway; deployment in containers.</td></tr>
+        <tr><td>Built with our first design partners</td><td>Model rollouts and rollback, recovery from device failures, multi-tenant isolation, profiling from a request down to a kernel, and support commitments.</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="report">Sample qualification report</h2>
+    <p>This is what FuseZap Validate produces after every model, SDK or driver change: <a href="reports/fusezap-sample-qualification-report.pdf">sample report (PDF)</a>. It was generated from our own results on Apple silicon. On your chip, it runs in your CI.</p>
+
     <h2>What isn’t done yet</h2>
     <ul>
-      <li>No custom accelerator backend yet. Today: CPU and Apple Metal. NVIDIA CUDA is next; AMD HIP follows.</li>
+      <li>No custom accelerator backend yet. Today: CPU and Apple Metal. The NVIDIA CUDA backend is in progress, AWS Inferentia2 is next, and AMD HIP follows.</li>
       <li>No published benchmark against vLLM yet. The harness and method are written; the H100 runs are next.</li>
       <li>Larger models (7B and up), mixture-of-experts and multi-device sharding are not tested yet.</li>
       <li>No prefix caching. Tool calls are rendered into the prompt but not parsed, and logprobs are not returned.</li>

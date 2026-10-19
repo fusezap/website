@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FuseZap — Fast AI inference on any chip</title>
-<meta name="description" content="FuseZap gets today’s open AI models running on new AI chips, behind the API customers already use. A Techyodl product.">
+<title>FuseZap — Today’s AI models, running on your chip</title>
+<meta name="description" content="FuseZap gets today’s open AI models running fast on new AI chips, built on the chip maker’s own toolchain, and keeps them working with every release. A Techyodl product.">
 <meta name="theme-color" content="#FFFFFF">
 <meta property="og:type" content="website">
-<meta property="og:title" content="FuseZap — Fast AI inference on any chip">
-<meta property="og:description" content="Make your AI chip ready for today’s language models. Now looking for design partners.">
+<meta property="og:title" content="FuseZap — Today’s AI models, running on your chip">
+<meta property="og:description" content="Your chip is ready. Let’s get your models ready. Now taking on design partners.">
 <meta property="og:url" content="https://fusezap.ai">
 <meta property="og:image" content="https://fusezap.ai/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -17,7 +17,7 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=202610191200">
+<link rel="stylesheet" href="styles.css?v=202610191900">
 </head>
 <body>
 
@@ -38,8 +38,8 @@
 <nav>
   <div class="wrap">
     <a class="brand" href="#top"><svg aria-hidden="true"><use href="#fz-mark"/></svg><img src="wordmark.svg" alt="FuseZap" width="75" height="17"></a>
-    <div class="menu" id="menu"><a href="#product">Product</a><a href="#fit">Where it plugs in</a><a href="#proof">Results</a><a href="engineering.html">Engineering</a><a href="#faq">FAQ</a><a href="about.html">About</a><a class="menu-cta" href="#access">Get early access</a></div>
-    <a class="pill" href="#access">Get early access</a>
+    <div class="menu" id="menu"><a href="#product">Core</a><a href="#validate">Validate</a><a href="#fit">Where it plugs in</a><a href="#proof">Results</a><a href="engineering.html">Engineering</a><a href="#faq">FAQ</a><a href="about.html">About</a><a class="menu-cta" href="#access">Get an assessment</a></div>
+    <a class="pill" href="#access">Get an assessment</a>
     <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
   </div>
 </nav>
@@ -47,10 +47,10 @@
 <header class="hero center" id="top">
   <div class="wrap">
     <p class="name reveal">FuseZap</p>
-    <h1 class="reveal d1">Fast AI inference.<br><span>On any chip.</span></h1>
-    <p class="sub reveal d2">You built the chip. We get today’s open models running on it, behind the same API your customers already use.</p>
+    <h1 class="reveal d1">Your chip is ready.<br><span>Let’s get your models ready.</span></h1>
+    <p class="sub reveal d2">FuseZap gets today’s open models running fast on your AI chip, built on the toolchain you already have. Then it keeps every one of them working as new models, SDKs and drivers come out.</p>
     <div class="links reveal d3">
-      <a class="pill" href="#access">Get early access</a>
+      <a class="pill" href="#access">Get a free assessment</a>
       <a class="more" href="#film" data-watch>Watch a chip come alive ›</a>
     </div>
   </div>
@@ -65,7 +65,7 @@
     </svg>
     <div class="tag t1">OpenAI-compatible<small>Apps work without changes</small></div>
     <div class="tag t2">New models, fast<small>Not months later</small></div>
-    <div class="tag t3">Checked<small>Against a reference, every time</small></div>
+    <div class="tag t3">Checked every release<small>Against the reference model</small></div>
   </div>
 </header>
 
@@ -116,16 +116,16 @@
   <div class="wrap">
     <div class="center">
       <p class="kicker reveal">Why FuseZap</p>
-      <h2 class="headline reveal d1">Your chip is great.<br>Now it needs today’s models.</h2>
+      <h2 class="headline reveal d1">Two things your chip needs.<br>We take care of both.</h2>
     </div>
     <div class="bento">
       <div class="tile w4 violet reveal">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linejoin="round"/></svg>
-        <div><h3>Ship model support without building a serving team.</h3><p>Skip the year it takes to build an LLM serving stack in-house.</p></div>
+        <div><h3>Core: today’s models, running fast on your chip.</h3><p>The compiler, kernels and serving stack between an open model and your silicon, without hiring a team to build them.</p></div>
       </div>
       <div class="tile w2 reveal d1">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7M21 4v5h-5" fill="none" stroke="#6C3BFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div><h3>Keep pace with new models.</h3><p>When a popular open model ships, we bring it up on your chip and test it.</p></div>
+        <div><h3>Validate: still right after every release.</h3><p>Every new model, SDK and driver is re-tested against the reference, with a report you can share.</p></div>
       </div>
       <div class="tile w3 reveal">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7 3 12l5 5M16 7l5 5-5 5" fill="none" stroke="#6C3BFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -209,7 +209,38 @@ client.chat.completions.create(
       </table>
       <p>Naive INT4 hurts a model this small, so we don’t ship it that way. For 4-bit we load AWQ and GPTQ checkpoints. Their numbers come with the 7B benchmarks.</p>
     </div>
+    <div class="qtable reveal">
+      <table>
+        <caption>Where FuseZap runs</caption>
+        <thead><tr><th>Platform</th><th>Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Apple silicon (Metal)</td><td>Today</td><td>Full serving stack, measured above</td></tr>
+          <tr><td>CPU</td><td>Today</td><td>Correctness and test reference</td></tr>
+          <tr><td>NVIDIA (CUDA)</td><td>In progress</td><td>Kernels, then a 7B benchmark against vLLM on H100</td></tr>
+          <tr><td>AWS Inferentia2</td><td>Next</td><td>Our first accelerator that isn’t a GPU</td></tr>
+          <tr><td>AMD (HIP)</td><td>Planned</td><td>2027</td></tr>
+          <tr><td>Your chip</td><td>With you</td><td>Through a design partnership</td></tr>
+        </tbody>
+      </table>
+    </div>
     <p class="fine reveal">Method, limits and what’s not done yet: <a href="engineering.html">Engineering notes ›</a></p>
+  </div>
+</section>
+
+<section id="validate">
+  <div class="wrap">
+    <div class="center">
+      <p class="kicker reveal">FuseZap Validate</p>
+      <h2 class="headline reveal d1">A new release shouldn’t<br>break a customer’s model.</h2>
+      <p class="sub reveal d2">Your SDK changes. A driver ships. A new model lands. Each time, someone has to check that every model still gives the right answers at the right speed. Usually it’s one of your best engineers, by hand. Validate does it every time, and shows its work.</p>
+    </div>
+    <ol class="journey">
+      <li class="reveal"><span>1</span><h3>Something changes.</h3><p>A new model, SDK, driver or firmware version.</p></li>
+      <li class="reveal d1"><span>2</span><h3>We rerun everything.</h3><p>Every supported model, against the reference, in every number format you ship.</p></li>
+      <li class="reveal d2"><span>3</span><h3>We measure it.</h3><p>Accuracy, speed and memory, compared with the last release.</p></li>
+      <li class="reveal d3"><span>4</span><h3>You get a clear answer.</h3><p>A pass, or the exact failure and the versions it affects.</p></li>
+    </ol>
+    <div class="links reveal"><a class="more" href="reports/fusezap-sample-qualification-report.pdf">See a sample report (PDF) ›</a></div>
   </div>
 </section>
 
@@ -250,7 +281,7 @@ client.chat.completions.create(
       <li class="reveal"><span>1</span><h3>We talk for 20 minutes.</h3><p>You tell us about your chip, your toolchain and the models your customers ask for.</p></li>
       <li class="reveal d1"><span>2</span><h3>You give us access, under NDA.</h3><p>Your SDK and toolchain, plus a dev board, a PCIe card or remote access. Pre-silicon? A functional simulator works too. Your designs stay with you.</p></li>
       <li class="reveal d2"><span>3</span><h3>We run a conformance pass, then a first model.</h3><p>First we show exactly which operations your toolchain handles. Then an open model serves on your chip, with a report.</p></li>
-      <li class="reveal d3"><span>4</span><h3>We keep it current.</h3><p>As new models land, we add them, test them and tell you what changed.</p></li>
+      <li class="reveal d3"><span>4</span><h3>We keep it working.</h3><p>As new models, SDKs and drivers land, Validate re-tests everything and tells you exactly what changed.</p></li>
     </ol>
   </div>
 </section>
@@ -262,14 +293,17 @@ client.chat.completions.create(
       <h2 class="headline reveal d1">What chip software teams<br>ask us first.</h2>
     </div>
     <div class="faq reveal d2">
+      <details><summary>Why not just write a vLLM plugin?</summary><p>You can, and some teams do. A plugin gives you vLLM’s scheduler and API, but your engineers still write and tune kernels for each model’s operations, and keep up as vLLM changes every few weeks. FuseZap generates and tunes kernels for your chip from about 28 primitive operations, so a new model should need little or no new kernel work. We’re measuring exactly that on a real accelerator now, and we’ll publish the number.</p></details>
       <details><summary>Do you replace our compiler or runtime?</summary><p>Partly, so here’s exactly which part. We use your low-level toolchain and driver to compile and launch kernels, and we call any tuned kernels you already have. We replace the graph-level layers above them: fusion, scheduling, kernel generation and serving. Everything that touches your silicon directly stays yours.</p></details>
       <details><summary>What if our toolchain can’t handle something?</summary><p>Then we find out in the first weeks, not at launch. A project starts with a conformance run that shows which operations, data types and shapes your toolchain handles. We generate kernels in your kernel language where we can, and flag clearly what needs your engineers.</p></details>
       <details><summary>How long does it take to get a model running?</summary><p>It depends on how mature your toolchain is. Our goal is weeks, not quarters, for a first model. After a first call, we’ll give you an honest estimate.</p></details>
       <details><summary>Can we start before we have silicon?</summary><p>Yes. If your functional simulator exposes the same compile-and-launch path as your driver, we can build the backend and prove correctness on it, op by op and model by model. Performance tuning waits for real hardware, so you’re ready to tune the day boards arrive.</p></details>
+      <details><summary>What happens when we ship a new SDK or driver?</summary><p>Validate reruns every supported model against the reference, in every number format, and compares accuracy, speed and memory with the last release. You get a pass, or the exact failure and which versions it affects, before your customers find it.</p></details>
+      <details><summary>Is it ready for production?</summary><p>Not for a large fleet yet, and we’d rather say so. Today the focus is getting models running correctly on new chips. Metrics, tracing and access control come from standard tools you likely already run, such as Prometheus, OpenTelemetry and an API gateway. The rest, like rollouts and failure recovery, we build with our first design partners. The <a href="engineering.html#production">engineering notes</a> list what exists today.</p></details>
       <details><summary>Who owns the code for our chip?</summary><p>You do. The code written for your chip is yours, and we can hand it over in full, with its tests, so your team can run it without us.</p></details>
       <details><summary>How do you protect our IP?</summary><p>We work under NDA, on your hardware or in your environment if you prefer. Nothing about your chip goes into work we do for anyone else.</p></details>
       <details><summary>How do you prove it’s right?</summary><p>We compare against PyTorch and Hugging Face at every level: single operations, whole models token for token, and perplexity for every number format. You get the report, and the tests run in your CI too.</p></details>
-      <details><summary>What does it cost?</summary><p>Right now we’re working with a few design partners free of charge. After that: a fixed price to bring a chip up, and a subscription to keep it current, well below the cost of an in-house team.</p></details>
+      <details><summary>What does it cost?</summary><p>Right now we’re working with a few design partners free of charge. After that: a fixed price to bring your chip up (Core), and a yearly subscription to keep every model qualified (Validate), well below the cost of an in-house team.</p></details>
     </div>
   </div>
 </section>
@@ -288,10 +322,10 @@ client.chat.completions.create(
 
 <section class="cta center" id="access">
   <div class="wrap">
-    <h2 class="headline reveal">Building an AI chip?<br><span>Let’s talk.</span></h2>
-    <p class="sub reveal d1">We’re looking for a few chip makers to work with closely as design partners. You get hands-on help from us, free of charge. It starts with a 20-minute call.</p>
+    <h2 class="headline reveal">Building an AI chip?<br><span>Let’s see what runs today.</span></h2>
+    <p class="sub reveal d1">Start with a free compatibility assessment. Tell us about your chip and toolchain, and we’ll show you which operations and models can run on it today, and what it would take to get the rest. We’re also taking on a few design partners, with hands-on help free of charge.</p>
     <div class="links reveal d2">
-      <a class="pill" href="mailto:tgpromod@techyodl.ai?subject=FuseZap%3A%20let%E2%80%99s%20talk&amp;body=Hi%20Promod%2C%0A%0AWe%E2%80%99re%20building%20an%20AI%20chip%20and%20would%20like%20to%20see%20FuseZap.%20A%20good%20time%20for%20a%2020-minute%20call%20would%20be%3A%20">Book a 20-minute call</a>
+      <a class="pill" href="mailto:tgpromod@techyodl.ai?subject=FuseZap%20compatibility%20assessment&amp;body=Hi%20Promod%2C%0A%0AWe%E2%80%99re%20building%20an%20AI%20chip%20and%20would%20like%20a%20compatibility%20assessment.%0A%0AOur%20kernel%20toolchain%20(C%2C%20LLVM%2C%20MLIR%20or%20other)%3A%20%0AModels%20our%20customers%20ask%20for%3A%20%0AA%20good%20time%20for%20a%2020-minute%20call%3A%20">Get a free assessment</a>
       <a class="more" href="mailto:tgpromod@techyodl.ai">tgpromod@techyodl.ai ›</a>
     </div>
   </div>
