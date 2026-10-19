@@ -57,6 +57,7 @@
       <li><b>Runtime:</b> loads kernels and launches them through your driver API.</li>
       <li><b>Allocator:</b> device memory through your driver.</li>
     </ul>
+    <p>The backend only needs a way to compile a kernel and a way to launch it, so a functional simulator with the same interface works before silicon exists. On a simulator we prove correctness; performance tuning waits for real hardware.</p>
     <p>Tuned kernels you already have, such as matmul or attention, plug in through a custom-kernel hook and are called directly instead of generated. Everything above the backend is shared by every chip: the compiler passes, the model code, the serving engine and the tests.</p>
 
     <h2>Correctness method</h2>

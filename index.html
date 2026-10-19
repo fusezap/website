@@ -220,7 +220,7 @@ client.chat.completions.create(
         <li>A way to compile a kernel: your C, LLVM or MLIR-level toolchain</li>
         <li>A driver API to allocate memory and launch work</li>
         <li>Optionally, your tuned matmul and attention kernels, which we call directly</li>
-        <li>A dev board or remote access, under NDA</li></ul></div>
+        <li>A dev board, PCIe card or remote access, under NDA. Before tape-out, a functional simulator</li></ul></div>
       <div class="reveal d1"><h3>We provide</h3><ul>
         <li>A backend for your chip: renderer, compiler hook, runtime and allocator</li>
         <li>Fused, auto-tuned kernels for everything your libraries don’t cover</li>
@@ -238,7 +238,7 @@ client.chat.completions.create(
     </div>
     <ol class="journey">
       <li class="reveal"><span>1</span><h3>We talk for 20 minutes.</h3><p>You tell us about your chip, your toolchain and the models your customers ask for.</p></li>
-      <li class="reveal d1"><span>2</span><h3>You give us access, under NDA.</h3><p>Your SDK and toolchain, and a dev board or remote access. Your designs stay with you.</p></li>
+      <li class="reveal d1"><span>2</span><h3>You give us access, under NDA.</h3><p>Your SDK and toolchain, plus a dev board, a PCIe card or remote access. Pre-silicon? A functional simulator works too. Your designs stay with you.</p></li>
       <li class="reveal d2"><span>3</span><h3>We run a conformance pass, then a first model.</h3><p>First we show exactly which operations your toolchain handles. Then an open model serves on your chip, with a report.</p></li>
       <li class="reveal d3"><span>4</span><h3>We keep it current.</h3><p>As new models land, we add them, test them and tell you what changed.</p></li>
     </ol>
@@ -255,6 +255,7 @@ client.chat.completions.create(
       <details><summary>Do you replace our compiler or runtime?</summary><p>Partly, so here’s exactly which part. We use your low-level toolchain and driver to compile and launch kernels, and we call any tuned kernels you already have. We replace the graph-level layers above them: fusion, scheduling, kernel generation and serving. Everything that touches your silicon directly stays yours.</p></details>
       <details><summary>What if our toolchain can’t handle something?</summary><p>Then we find out in the first weeks, not at launch. A project starts with a conformance run that shows which operations, data types and shapes your toolchain handles. We generate kernels in your kernel language where we can, and flag clearly what needs your engineers.</p></details>
       <details><summary>How long does it take to get a model running?</summary><p>It depends on how mature your toolchain is. Our goal is weeks, not quarters, for a first model. After a first call, we’ll give you an honest estimate.</p></details>
+      <details><summary>Can we start before we have silicon?</summary><p>Yes. If your functional simulator exposes the same compile-and-launch path as your driver, we can build the backend and prove correctness on it, op by op and model by model. Performance tuning waits for real hardware, so you’re ready to tune the day boards arrive.</p></details>
       <details><summary>Who owns the code for our chip?</summary><p>You do. The code written for your chip is yours, and we can hand it over in full, with its tests, so your team can run it without us.</p></details>
       <details><summary>How do you protect our IP?</summary><p>We work under NDA, on your hardware or in your environment if you prefer. Nothing about your chip goes into work we do for anyone else.</p></details>
       <details><summary>How do you prove it’s right?</summary><p>We compare against PyTorch and Hugging Face at every level: single operations, whole models token for token, and perplexity for every number format. You get the report, and the tests run in your CI too.</p></details>
