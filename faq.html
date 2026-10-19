@@ -51,7 +51,7 @@
       <div class="faq-chips"><a href="#start">Getting started</a><a href="#how">How it works</a><a href="#trust">Ownership, trust and cost</a></div>
     </div>
     <section class="faq-group" id="start">
-      <h2>Getting started</h2><p class="faq-sub">Before you commit to anything.</p>
+      <h2>Getting started</h2>
       <div class="faq">
       <details id="how-long"><summary>How long does it take to get a model running?</summary><p>It depends on how mature your toolchain is. Our goal is weeks, not quarters, for a first model. After a first call, we’ll give you an honest estimate.</p></details>
       <details id="pre-silicon"><summary>Can we start before we have silicon?</summary><p>Yes. If your functional simulator exposes the same compile-and-launch path as your driver, we can build the backend and prove correctness on it, op by op and model by model. Performance tuning waits for real hardware, so you’re ready to tune the day boards arrive.</p></details>
@@ -60,7 +60,7 @@
       </div>
     </section>
     <section class="faq-group" id="how">
-      <h2>How it works</h2><p class="faq-sub">For the engineers who’ll live with it.</p>
+      <h2>How it works</h2>
       <div class="faq">
       <details id="vllm"><summary>Why not just write a vLLM plugin?</summary><p>You can, and some teams do. A plugin gives you vLLM’s scheduler and API, but your engineers still write and tune kernels for each model’s operations, and keep up as vLLM changes every few weeks. FuseZap generates and tunes kernels for your chip from about 28 primitive operations, so a new model should need little or no new kernel work. We’re measuring exactly that on a real accelerator now, and we’ll publish the number.</p></details>
       <details id="compiler"><summary>Do you replace our compiler or runtime?</summary><p>Partly, so here’s exactly which part. We use your low-level toolchain and driver to compile and launch kernels, and we call any tuned kernels you already have. We replace the graph-level layers above them: fusion, scheduling, kernel generation and serving. Everything that touches your silicon directly stays yours.</p></details>
@@ -70,7 +70,7 @@
       </div>
     </section>
     <section class="faq-group" id="trust">
-      <h2>Ownership, trust and cost</h2><p class="faq-sub">The questions your CEO and lawyers will ask.</p>
+      <h2>Ownership, trust and cost</h2>
       <div class="faq">
       <details id="ownership"><summary>Who owns the code for our chip?</summary><p>You do. The code written for your chip is yours, and we can hand it over in full, with its tests, so your team can run it without us.</p></details>
       <details id="ip"><summary>How do you protect our IP?</summary><p>We work under NDA, on your hardware or in your environment if you prefer. Nothing about your chip goes into work we do for anyone else.</p></details>
