@@ -77,7 +77,8 @@
         <tr><td>Operations</td><td>Required</td><td>Elementwise arithmetic and comparisons, exp2, log2, sqrt and sin, and sum and max along an axis. Integer division and modulo for indexing are emulated if missing.</td></tr>
         <tr><td>Tuned kernels</td><td>Optional</td><td>Your matmul and attention kernels, called through our custom-kernel hook instead of generated ones.</td></tr>
         <tr><td>Scratchpad and barriers</td><td>Optional</td><td>On-chip memory and synchronization, used by the generated kernels when available.</td></tr>
-        <tr><td>Multiple devices</td><td>Not yet</td><td>Collectives and sharding across chips are not part of v0.</td></tr>
+        <tr><td>Memory hierarchy</td><td>Flat device memory today</td><td>Generated kernels assume device memory plus optional on-chip shared memory, as on GPUs. Software-managed scratchpads with explicit DMA and double buffering are being built for Inferentia2 now; we’ll publish what changed.</td></tr>
+        <tr><td>Multiple devices</td><td>Not yet</td><td>Tensor and pipeline parallelism across chips are not part of v0. They’re planned once a design partner needs models larger than one chip can hold.</td></tr>
       </tbody>
     </table>
     <p>Real chips don’t always fit a clean interface. Inferentia2 already breaks a few of these assumptions: shapes are fixed when a kernel is compiled, its kernel language works on whole tiles rather than threads, and its compiler has to run in a separate process. We’ll publish every exception we hit, along with how we handled it.</p>
