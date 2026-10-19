@@ -17,7 +17,7 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=202610161951">
+<link rel="stylesheet" href="styles.css?v=202610181800">
 </head>
 <body>
 
@@ -38,7 +38,7 @@
 <nav>
   <div class="wrap">
     <a class="brand" href="#top"><svg aria-hidden="true"><use href="#fz-mark"/></svg><img src="wordmark.svg" alt="FuseZap" width="75" height="17"></a>
-    <div class="menu" id="menu"><a href="#highlights">Overview</a><a href="#product">Product</a><a href="#fit">How it fits</a><a href="about.html">About</a><a class="menu-cta" href="#access">Get early access</a></div>
+    <div class="menu" id="menu"><a href="#product">Product</a><a href="#proof">Proof</a><a href="#how">Working together</a><a href="#faq">FAQ</a><a href="about.html">About</a><a class="menu-cta" href="#access">Get early access</a></div>
     <a class="pill" href="#access">Get early access</a>
     <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
   </div>
@@ -68,6 +68,20 @@
     <div class="tag t3">Checked<small>Against a reference, every time</small></div>
   </div>
 </header>
+
+<section class="alt" id="pain">
+  <div class="wrap">
+    <div class="center">
+      <p class="kicker reveal">Sound familiar?</p>
+      <h2 class="headline reveal d1">The chip is ready.<br>The models aren’t.</h2>
+    </div>
+    <div class="pains">
+      <div class="pain reveal"><p class="q">“A new model came out last week. Customers are already asking if it runs on our chip.”</p><p>Two to four notable open models land every month. Each one is a new test.</p></div>
+      <div class="pain reveal d1"><p class="q">“They want to run their own fine-tuned model, not the three we converted.”</p><p>Evaluators bring their own weights and expect the API they already use.</p></div>
+      <div class="pain reveal d2"><p class="q">“Our best compiler people are writing model glue instead of making the chip faster.”</p><p>An in-house serving team means 8 to 15 hard-to-hire engineers, every year.</p></div>
+    </div>
+  </div>
+</section>
 
 <section id="film">
   <div class="wrap center">
@@ -161,6 +175,21 @@ client.chat.completions.create(
   </div>
 </section>
 
+<section class="proof" id="proof">
+  <div class="wrap center">
+    <p class="kicker reveal">Already running</p>
+    <h2 class="headline reveal d1">Not a slide.<br>Running code.</h2>
+    <p class="sub reveal d2">Measured this month on Apple silicon. NVIDIA and AMD are next. Then your chip.</p>
+    <div class="stats">
+      <div class="stat reveal"><b>Exact</b><span>Qwen2.5 output matches Hugging Face’s reference, token for token</span></div>
+      <div class="stat reveal d1"><b>1,430</b><span>tokens a second across 32 users at once, on one Apple M5 Max</span></div>
+      <div class="stat reveal d2"><b>No loss</b><span>in accuracy at 8-bit (perplexity −0.2% vs 16-bit)</span></div>
+      <div class="stat reveal d3"><b>5,739</b><span>automated tests passing on four kinds of hardware</span></div>
+    </div>
+    <p class="fine reveal">Qwen2.5-0.5B-Instruct, October 2026. Method and logs on request.</p>
+  </div>
+</section>
+
 <section class="alt" id="fit">
   <div class="wrap center">
     <p class="kicker reveal">How it fits</p>
@@ -171,6 +200,38 @@ client.chat.completions.create(
       <div class="layer fz reveal d1" role="listitem">FuseZap<span>Serving, models, APIs</span></div>
       <div class="layer reveal d2" role="listitem">Your compiler and runtime<span>Unchanged</span></div>
       <div class="layer reveal d3" role="listitem">Your silicon<span>Any AI chip</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="center">
+      <p class="kicker reveal">Working together</p>
+      <h2 class="headline reveal d1">What happens<br>after you say hello.</h2>
+    </div>
+    <ol class="journey">
+      <li class="reveal"><span>1</span><h3>A 20-minute call.</h3><p>You tell us about your chip, your toolchain and the models your customers ask for. No slides.</p></li>
+      <li class="reveal d1"><span>2</span><h3>Access, under NDA.</h3><p>You share your SDK and a dev board or remote access. Your designs stay with you.</p></li>
+      <li class="reveal d2"><span>3</span><h3>A first model, running.</h3><p>We bring up an open model on your chip behind the OpenAI API, with an accuracy report.</p></li>
+      <li class="reveal d3"><span>4</span><h3>Kept current.</h3><p>As new models land, we add them, test them and tell you what changed.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="alt" id="faq">
+  <div class="wrap">
+    <div class="center">
+      <p class="kicker reveal">Questions chip makers ask us</p>
+      <h2 class="headline reveal d1">Straight answers.</h2>
+    </div>
+    <div class="faq reveal d2">
+      <details><summary>Do you replace our compiler or runtime?</summary><p>No. FuseZap sits on top of what you’ve built and uses it. Your team keeps owning the parts that make your chip special.</p></details>
+      <details><summary>How long does it take to get a model running?</summary><p>It depends on how mature your toolchain is. Our goal is weeks, not quarters, for a first model. After a first call, we’ll give you an honest estimate.</p></details>
+      <details><summary>Who owns the code for our chip?</summary><p>You do. The code written for your chip is yours, and we can hand it over in full, with its tests, so your team can run it without us.</p></details>
+      <details><summary>How do you protect our IP?</summary><p>We work under NDA, on your hardware or in your environment if you prefer. Nothing about your chip goes into work we do for anyone else.</p></details>
+      <details><summary>How do you prove it’s right?</summary><p>Every result is checked against a reference implementation. You get a report with matching outputs and the accuracy of each number format, which you can share with your customers.</p></details>
+      <details><summary>What does it cost?</summary><p>Right now we’re working with a few design partners free of charge. After that: a fixed price to bring a chip up, and a subscription to keep it current, well below the cost of an in-house team.</p></details>
     </div>
   </div>
 </section>
@@ -190,9 +251,9 @@ client.chat.completions.create(
 <section class="cta center" id="access">
   <div class="wrap">
     <h2 class="headline reveal">Building an AI chip?<br><span>Let’s talk.</span></h2>
-    <p class="sub reveal d1">We’re looking for a few chip makers to work with closely as design partners. You get hands-on help from us, free of charge.</p>
+    <p class="sub reveal d1">We’re looking for a few chip makers to work with closely as design partners. You get hands-on help from us, free of charge. It starts with a 20-minute call.</p>
     <div class="links reveal d2">
-      <a class="pill" href="mailto:tgpromod@techyodl.ai?subject=FuseZap%20early%20access">Get early access</a>
+      <a class="pill" href="mailto:tgpromod@techyodl.ai?subject=FuseZap%3A%20let%E2%80%99s%20talk&amp;body=Hi%20Promod%2C%0A%0AWe%E2%80%99re%20building%20an%20AI%20chip%20and%20would%20like%20to%20see%20FuseZap.%20A%20good%20time%20for%20a%2020-minute%20call%20would%20be%3A%20">Book a 20-minute call</a>
       <a class="more" href="mailto:tgpromod@techyodl.ai">tgpromod@techyodl.ai ›</a>
     </div>
   </div>
