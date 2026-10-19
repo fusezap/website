@@ -17,7 +17,7 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=202610190900">
+<link rel="stylesheet" href="styles.css?v=202610191200">
 </head>
 <body>
 
@@ -70,17 +70,27 @@
 </header>
 
 <section class="alt" id="pain">
-  <div class="wrap">
-    <div class="center">
+  <div class="wrap pain-grid">
+    <div class="pain-story">
       <p class="kicker reveal">Sound familiar?</p>
-      <h2 class="headline reveal d1">The chip is ready.<br>The models aren’t.</h2>
+      <h2 class="pain-title reveal d1">“Can it run<br>our model?”</h2>
+      <p class="pain-lede reveal d2">You spent years getting the silicon right. The benchmarks look great. Then a serious customer asks the one question that decides the deal, and the honest answer is <em>not yet</em>.</p>
+      <p class="pain-body reveal d2">Not because the chip can’t do it. Because nobody has written the software that runs that model on it. And next month there’s another one.</p>
+      <dl class="pain-facts reveal d3">
+        <div><dt>2–4</dt><dd>notable open models released every month</dd></div>
+        <div><dt>8–15</dt><dd>engineers to do it in-house (our estimate)</dd></div>
+        <div><dt>Months</dt><dd>to port each new model by hand</dd></div>
+      </dl>
     </div>
-    <div class="pains">
-      <div class="pain reveal"><p class="q">“A new model came out last week. Customers are already asking if it runs on our chip.”</p><p>Two to four notable open models land every month. Each one is a new test.</p></div>
-      <div class="pain reveal d1"><p class="q">“They want to run their own fine-tuned model, not the three we converted.”</p><p>Evaluators bring their own weights and expect the API they already use.</p></div>
-      <div class="pain reveal d2"><p class="q">“Our best compiler people are writing model glue instead of making the chip faster.”</p><p>By our estimate, an in-house serving team is 8 to 15 hard-to-hire engineers, every year.</p></div>
-    </div>
+    <figure class="thread reveal d1" aria-label="Illustration of a team chat about a customer request">
+      <div class="thread-top"><span class="thread-dot"></span><b># pilot-eval</b><span>3 people</span></div>
+      <div class="msg reveal d2"><span class="av av-c">C</span><div><p class="who">Customer <span>9:12</span></p><p>We fine-tuned last week’s new open model. Can we run it on your card for the pilot?</p></div></div>
+      <div class="msg reveal d3"><span class="av av-s">S</span><div><p class="who">Sales <span>9:20</span></p><p>@compiler-team what do I tell them? They want an answer by Friday.</p></div></div>
+      <div class="msg reveal d4"><span class="av av-k">K</span><div><p class="who">Compiler lead <span>9:47</span></p><p>Honestly? Not this quarter. We’re still porting the last&nbsp;one.</p></div></div>
+      <div class="thread-foot reveal d4"><span class="typing"><i></i><i></i><i></i></span>Sales is typing…</div>
+    </figure>
   </div>
+  <p class="wrap pain-note reveal">An illustration, but if you’ve been in this thread, <a href="#how">we should talk</a>.</p>
 </section>
 
 <section id="film">
