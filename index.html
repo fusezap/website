@@ -17,7 +17,7 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=202610192100">
+<link rel="stylesheet" href="styles.css?v=202610201300">
 </head>
 <body>
 
@@ -227,6 +227,27 @@ client.chat.completions.create(
   </div>
 </section>
 
+<section class="alt" id="vllm">
+  <div class="wrap center">
+    <p class="kicker reveal">And vLLM?</p>
+    <h2 class="headline reveal d1">vLLM runs models on chips that are ready.<br>We get your chip ready.</h2>
+    <p class="sub reveal d2">We’re fans. vLLM is an excellent open-source engine, and on NVIDIA it’s faster than FuseZap today. But in practice, a chip joins the vLLM world only after its maker has built the foundation underneath: framework support for the operations models use, and hand-tuned kernels for the parts that matter. That foundation is the months of work FuseZap takes on.</p>
+    <div class="split">
+      <div class="reveal"><h3>Going it alone, your team builds</h3><ul>
+        <li>PyTorch or JAX support for your chip, one operation at a time</li>
+        <li>Hand-tuned kernels for attention, matrix multiply and every new model feature</li>
+        <li>A vLLM plugin that keeps pace as vLLM changes</li>
+        <li>Your own way to prove each release still works</li></ul></div>
+      <div class="reveal d1"><h3>With FuseZap, your team brings</h3><ul>
+        <li>The kernel compiler and driver you already have</li>
+        <li>Your tuned kernels, if you’d like us to use them</li>
+        <li>We generate the rest from about 28 basic operations</li>
+        <li>Validate proves every model after every release</li></ul></div>
+    </div>
+    <p class="vnote reveal">It doesn’t have to be either-or. You can keep vLLM for serving, and we’re building Validate to check any engine, vLLM included. One honest caveat: our claim that the second model costs far less than the first is exactly what our Inferentia2 work is measuring now. <a href="faq.html#vllm">More on this</a></p>
+  </div>
+</section>
+
 <section id="validate">
   <div class="wrap">
     <div class="center">
@@ -293,7 +314,7 @@ client.chat.completions.create(
       <h2 class="headline reveal d1">What chip software teams<br>ask us first.</h2>
     </div>
     <div class="faq reveal d2">
-      <details><summary>Why not just write a vLLM plugin?</summary><p>You can, and some teams do. A plugin gives you vLLM’s scheduler and API, but your engineers still write and tune kernels for each model’s operations, and keep up as vLLM changes every few weeks. FuseZap generates and tunes kernels for your chip from about 28 primitive operations, so a new model should need little or no new kernel work. We’re measuring exactly that on a real accelerator now, and we’ll publish the number.</p></details>
+      <details><summary>vLLM says it runs any model on any hardware. Why FuseZap?</summary><p>vLLM is excellent, and on NVIDIA it’s faster than us today. But in practice a chip only joins vLLM after its maker builds PyTorch or JAX support and hand-tuned kernels. That’s the months of work FuseZap takes on: you bring a kernel compiler and a driver, we generate the rest, and Validate proves every release. <a href="#vllm">More above</a>.</p></details>
       <details><summary>Do you replace our compiler or runtime?</summary><p>Partly, so here’s exactly which part. We use your low-level toolchain and driver to compile and launch kernels, and we call any tuned kernels you already have. We replace the graph-level layers above them: fusion, scheduling, kernel generation and serving. Everything that touches your silicon directly stays yours.</p></details>
       <details><summary>How long does it take to get a model running?</summary><p>It depends on how mature your toolchain is. Our goal is weeks, not quarters, for a first model. After a first call, we’ll give you an honest estimate.</p></details>
       <details><summary>Who owns the code for our chip?</summary><p>You do. The code written for your chip is yours, and we can hand it over in full, with its tests, so your team can run it without us.</p></details>
@@ -328,7 +349,7 @@ client.chat.completions.create(
 
 <footer>
   <div class="wrap">
-    <span>Copyright © 2026 Techyodl. All rights reserved. FuseZap is a Techyodl product.</span>
+    <span>Copyright © 2026 Techyodl. All rights reserved. FuseZap is a Techyodl product. vLLM, PyTorch, NVIDIA and other names are trademarks of their owners; FuseZap is not affiliated with or endorsed by them.</span>
     <div class="legal-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="mailto:tgpromod@techyodl.ai">Contact</a></div>
   </div>
 </footer>

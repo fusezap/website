@@ -16,7 +16,7 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=202610192100">
+<link rel="stylesheet" href="styles.css?v=202610201300">
 </head>
 <body>
 
@@ -62,7 +62,7 @@
     <section class="faq-group" id="how">
       <h2>How it works</h2>
       <div class="faq">
-      <details id="vllm"><summary>Why not just write a vLLM plugin?</summary><p>You can, and some teams do. A plugin gives you vLLM’s scheduler and API, but your engineers still write and tune kernels for each model’s operations, and keep up as vLLM changes every few weeks. FuseZap generates and tunes kernels for your chip from about 28 primitive operations, so a new model should need little or no new kernel work. We’re measuring exactly that on a real accelerator now, and we’ll publish the number.</p></details>
+      <details id="vllm"><summary>vLLM says it runs any model on any hardware. Why FuseZap?</summary><p>vLLM is an excellent serving engine, and on NVIDIA it’s faster than FuseZap today. Its hardware support is real, but in practice each chip in the vLLM world sits on top of its maker’s own work: PyTorch or JAX support for the operations models use, plus hand-tuned kernels for attention, matrix multiply and each new model feature. That foundation is what takes a chip team months.</p><p>FuseZap works one level lower. Models break down into about 28 basic operations, and we generate and tune the code for your chip from those, so you bring a kernel compiler and a driver rather than a whole framework port. Validate then proves every model after every release, which a serving engine doesn’t do.</p><p>It doesn’t have to be either-or: you can keep vLLM for serving, and we’re building Validate to check any engine. The claim that a second model costs far less than the first is what we’re measuring on Inferentia2 now, and we’ll publish the number either way.</p></details>
       <details id="compiler"><summary>Do you replace our compiler or runtime?</summary><p>Partly, so here’s exactly which part. We use your low-level toolchain and driver to compile and launch kernels, and we call any tuned kernels you already have. We replace the graph-level layers above them: fusion, scheduling, kernel generation and serving. Everything that touches your silicon directly stays yours.</p></details>
       <details id="proof"><summary>How do you prove it’s right?</summary><p>We compare against PyTorch and Hugging Face at every level: single operations, whole models token for token, and perplexity for every number format. You get the report, and the tests run in your CI too.</p></details>
       <details id="new-sdk"><summary>What happens when we ship a new SDK or driver?</summary><p>Validate reruns every supported model against the reference, in every number format, and compares accuracy, speed and memory with the last release. You get a pass, or the exact failure and which versions it affects, before your customers find it.</p></details>
@@ -92,7 +92,7 @@
 
 <footer>
   <div class="wrap">
-    <span>Copyright © 2026 Techyodl. All rights reserved. FuseZap is a Techyodl product.</span>
+    <span>Copyright © 2026 Techyodl. All rights reserved. FuseZap is a Techyodl product. vLLM, PyTorch, NVIDIA and other names are trademarks of their owners; FuseZap is not affiliated with or endorsed by them.</span>
     <div class="legal-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="mailto:tgpromod@techyodl.ai">Contact</a></div>
   </div>
 </footer>

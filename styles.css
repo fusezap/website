@@ -422,3 +422,7 @@ footer .legal-links a:hover { color: var(--text); text-decoration: underline; }
   .faq-more { padding: 18px 20px; border-radius: 16px; }
   .faq-ask { padding: 28px 24px; border-radius: 22px; }
 }
+
+#vllm .split { text-align: left; margin-top: 48px; }
+#vllm .vnote { max-width: 760px; margin: 40px auto 0; color: var(--grey); font-size: 16px; line-height: 1.6; }
+#vllm .vnote a { color: var(--violet-d); font-weight: 600; }

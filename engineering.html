@@ -16,7 +16,7 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=202610192100">
+<link rel="stylesheet" href="styles.css?v=202610201300">
 </head>
 <body>
 
@@ -61,7 +61,7 @@
     <p>Tuned kernels you already have, such as matmul or attention, plug in through a custom-kernel hook and are called directly instead of generated. Everything above the backend is shared by every chip: the compiler passes, the model code, the serving engine and the tests.</p>
 
     <h2 id="vllm">Why not a vLLM plugin?</h2>
-    <p>It’s a fair question, and for some teams a plugin is the right answer. vLLM’s hardware plugin interface gives you its scheduler, batching and API. What it doesn’t give you is the kernels. Your team still writes and tunes kernels for the operations each model uses, and every time a model introduces a new attention variant, activation or quantization format, that work starts again. You also follow vLLM’s internals, which change often.</p>
+    <p>It’s a fair question, and for some teams a plugin is the right answer. vLLM describes itself as running any model on any hardware, and its hardware support is real, but in practice each chip it supports builds on its maker’s own PyTorch or JAX backend and hand-tuned kernels. vLLM’s hardware plugin interface gives you its scheduler, batching and API. What it doesn’t give you is the kernels. Your team still writes and tunes kernels for the operations each model uses, and every time a model introduces a new attention variant, activation or quantization format, that work starts again. You also follow vLLM’s internals, which change often.</p>
     <p>FuseZap works one level lower. Models are built from about 28 primitive operations, and the compiler fuses and generates kernels for your chip from those, tuning them with a beam search. A new model is mostly a new combination of the same primitives, so it should need little or no new kernel work. Your tuned matmul and attention kernels still plug in where they’re faster.</p>
     <p>That is a claim we intend to prove, not just make. On our first non-GPU accelerator (AWS Inferentia2, in progress) we’re recording how much backend code, time and money the first model takes, and then the second. We’ll publish both numbers here.</p>
 
@@ -171,7 +171,7 @@
 
 <footer>
   <div class="wrap">
-    <span>Copyright © 2026 Techyodl. All rights reserved. FuseZap is a Techyodl product.</span>
+    <span>Copyright © 2026 Techyodl. All rights reserved. FuseZap is a Techyodl product. vLLM, PyTorch, NVIDIA and other names are trademarks of their owners; FuseZap is not affiliated with or endorsed by them.</span>
     <div class="legal-links"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="mailto:tgpromod@techyodl.ai">Contact</a></div>
   </div>
 </footer>
