@@ -188,35 +188,35 @@ client.chat.completions.create(
 <section class="proof" id="proof">
   <div class="wrap center">
     <p class="kicker reveal">What runs today</p>
-    <h2 class="headline reveal d1">We started with correctness,<br>on hardware we own.</h2>
-    <p class="sub reveal d2">Measured in October 2026 on an Apple M5 Max with Qwen2.5-0.5B-Instruct. That’s a small model on a friendly chip, so read this as proof the stack is right, not as a speed claim. H100 benchmarks against vLLM are next.</p>
+    <h2 class="headline reveal d1">Correct first.<br>Now measured against vLLM.</h2>
+    <p class="sub reveal d2">Measured in October 2026 on an NVIDIA H100 with Qwen2.5-7B-Instruct, with FuseZap and vLLM run back to back on the same machine. vLLM is still faster, and we show by how much.</p>
     <div class="stats">
-      <div class="stat reveal"><b>Token-exact</b><span>64 greedy tokens identical to the Hugging Face reference at FP32</span></div>
-      <div class="stat reveal d1"><b>Batch-invariant</b><span>32 concurrent requests, each bit-identical to running alone</span></div>
-      <div class="stat reveal d2"><b>1,430 tok/s</b><span>decode throughput at 32 concurrent requests (1,140 with prefill)</span></div>
-      <div class="stat reveal d3"><b>5,739 tests</b><span>passing on four execution tiers: interpreter, NumPy, CPU and Metal</span></div>
+      <div class="stat reveal"><b>99.3%</b><span>of 7B tokens match the Hugging Face FP32 reference in bf16 (our bar is 99%)</span></div>
+      <div class="stat reveal d1"><b>70% of vLLM</b><span>throughput for one user on the same H100 (115 vs 165 tokens/s)</span></div>
+      <div class="stat reveal d2"><b>53% of vLLM</b><span>throughput at 32 concurrent users (1,750 vs 3,314 tokens/s)</span></div>
+      <div class="stat reveal d3"><b>Batch-invariant</b><span>every request’s tokens are identical whether it runs alone or in a batch</span></div>
     </div>
     <div class="qtable reveal">
       <table>
-        <caption>Weight quantization on WikiText-2 (Qwen2.5-0.5B, context 1024, FP16 activations)</caption>
-        <thead><tr><th>Format</th><th>Scheme</th><th>Perplexity</th><th>vs FP16</th></tr></thead>
+        <caption>FuseZap vs vLLM 0.32.0, same NVIDIA H100, Qwen2.5-7B-Instruct (output tokens per second)</caption>
+        <thead><tr><th>Load</th><th>FuseZap</th><th>vLLM</th><th>FuseZap / vLLM</th></tr></thead>
         <tbody>
-          <tr><td>FP16</td><td>baseline</td><td>13.20</td><td>—</td></tr>
-          <tr><td>INT8</td><td>per-channel, symmetric</td><td>13.17</td><td>−0.2%</td></tr>
-          <tr><td>FP8 E4M3</td><td>per-tensor scale</td><td>13.27</td><td>+0.5%</td></tr>
-          <tr><td>INT4</td><td>group 128, round-to-nearest</td><td>15.71</td><td>+19.0%</td></tr>
+          <tr><td>1 user, bf16</td><td>115</td><td>165</td><td>70%</td></tr>
+          <tr><td>32 users, bf16</td><td>1,750</td><td>3,314</td><td>53%</td></tr>
+          <tr><td>1 user, FP8</td><td>143</td><td>241</td><td>59%</td></tr>
+          <tr><td>32 users, FP8</td><td>2,024</td><td>4,284</td><td>47%</td></tr>
         </tbody>
       </table>
-      <p>Naive INT4 hurts a model this small, so we don’t ship it that way. For 4-bit we load AWQ and GPTQ checkpoints. Their numbers come with the 7B benchmarks.</p>
+      <p>512 tokens in, 128 out, greedy, three repetitions, our <a href="engineering.html#h100">published method</a>. Accuracy cost on WikiText-2: INT8 +0.1% perplexity, FP8 +0.9%.</p>
     </div>
     <div class="qtable reveal">
       <table>
         <caption>Where FuseZap runs</caption>
         <thead><tr><th>Platform</th><th>Status</th><th>Notes</th></tr></thead>
         <tbody>
-          <tr><td>Apple silicon (Metal)</td><td>Today</td><td>Full serving stack, measured above</td></tr>
+          <tr><td>Apple silicon (Metal)</td><td>Today</td><td>Full serving stack</td></tr>
           <tr><td>CPU</td><td>Today</td><td>Correctness and test reference</td></tr>
-          <tr><td>NVIDIA (CUDA)</td><td>In progress</td><td>Kernels, then a 7B benchmark against vLLM on H100</td></tr>
+          <tr><td>NVIDIA (CUDA)</td><td>Today</td><td>7B serving on H100 in bf16 and FP8, measured above</td></tr>
           <tr><td>AWS Inferentia2</td><td>Next</td><td>Our first accelerator that isn’t a GPU</td></tr>
           <tr><td>AMD (HIP)</td><td>Planned</td><td>2027</td></tr>
           <tr><td>Your chip</td><td>With you</td><td>Through a design partnership</td></tr>

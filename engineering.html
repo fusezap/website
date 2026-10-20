@@ -88,9 +88,31 @@
       <li><b>Operations:</b> every primitive and composed op is tested against NumPy and PyTorch on four execution tiers (a pure-Python interpreter, NumPy, compiled CPU and Metal).</li>
       <li><b>Training parity:</b> a small GPT trains with losses matching PyTorch within 1e-4 on every tier.</li>
       <li><b>Models:</b> Qwen2.5-0.5B-Instruct produces 64 greedy tokens identical to Hugging Face Transformers at FP32. Chat templates match Hugging Face for six tokenizers (Qwen2.5, Llama 3.0 to 3.2, Mistral and SmolLM2).</li>
+      <li><b>7B on NVIDIA:</b> Qwen2.5-7B-Instruct in bf16 on an H100 picks the same next token as the Hugging Face FP32 reference at 99.3% of 1,024 positions (our bar is 99%, and Hugging Face’s own bf16 scores 99.1%).</li>
       <li><b>Batching:</b> 32 concurrent requests each produce tokens bit-identical to running alone, including under chunked prefill and preemption.</li>
       <li><b>API:</b> the server is exercised with OpenAI’s official Python client, including streaming and concurrent streams.</li>
     </ul>
+
+    <h2 id="h100">FuseZap vs vLLM on an NVIDIA H100 (October 2026)</h2>
+    <p>Qwen2.5-7B-Instruct, FuseZap and vLLM 0.32.0 run back to back on the same H100 80GB machine. Each request has 512 tokens in and 128 out, greedy decoding, three repetitions after a warm-up, unique prompts so no cache helps either engine. vLLM runs at its defaults. The comparison is only valid when both engines run on the same machine, because H100 machines differ by about 5%.</p>
+    <table class="etable">
+      <thead><tr><th>Output tokens/s</th><th>FuseZap</th><th>vLLM</th><th>FuseZap / vLLM</th></tr></thead>
+      <tbody>
+        <tr><td>1 user, bf16</td><td>115</td><td>165</td><td>70%</td></tr>
+        <tr><td>32 users, bf16</td><td>1,750</td><td>3,314</td><td>53%</td></tr>
+        <tr><td>1 user, FP8 (weights and activations)</td><td>143</td><td>241</td><td>59%</td></tr>
+        <tr><td>32 users, FP8</td><td>2,024</td><td>4,284</td><td>47%</td></tr>
+      </tbody>
+    </table>
+    <table class="etable">
+      <thead><tr><th>Latency at 32 users (ms)</th><th>FuseZap</th><th>vLLM</th></tr></thead>
+      <tbody>
+        <tr><td>Time to first token, p50 / p99</td><td>281 / 656</td><td>305 / 438</td></tr>
+        <tr><td>Time per output token, p50</td><td>15.7</td><td>6.8</td></tr>
+        <tr><td>Energy per output token</td><td>0.27 J</td><td>0.17 J</td></tr>
+      </tbody>
+    </table>
+    <p>Where we stand: vLLM is still faster, especially once many users are generating at the same time, and FuseZap uses about 1.6 times the energy per token. Across other prompt mixes FuseZap ranges from 44% to 73% of vLLM. Accuracy cost on WikiText-2 for the 7B model: INT8 +0.1% perplexity, FP8 +0.9%.</p>
 
     <h2>Measured results (Apple M5 Max, October 2026)</h2>
     <p>These are from hardware we own. They show that the stack works and is correct, not that it is fast on your chip.</p>
@@ -135,11 +157,11 @@
 
     <h2>What isn’t done yet</h2>
     <ul>
-      <li>No custom accelerator backend yet. Today: CPU and Apple Metal. The NVIDIA CUDA backend is in progress, AWS Inferentia2 is next, and AMD HIP follows.</li>
-      <li>No published benchmark against vLLM yet. The harness and method are written; the H100 runs are next.</li>
-      <li>Larger models (7B and up), mixture-of-experts and multi-device sharding are not tested yet.</li>
+      <li>No custom accelerator backend yet. Today: CPU, Apple Metal and NVIDIA CUDA. AWS Inferentia2 is next, and AMD HIP follows.</li>
+      <li>Still slower than vLLM: 70% of its throughput for one user and 53% at 32 users on the same H100. Generating tokens for many users at once is the main gap.</li>
+      <li>Tested up to 7B on a single GPU. Mixture-of-experts and multi-device sharding are not tested yet.</li>
       <li>No prefix caching. Tool calls are rendered into the prompt but not parsed, and logprobs are not returned.</li>
-      <li>FP8 is weight-only; native FP8 matmul needs a backend with FP8 hardware.</li>
+      <li>FP8 runs natively on NVIDIA H100 (weights and activations); on other backends it is weight-only.</li>
     </ul>
 
     <h2>Talk to us</h2>
