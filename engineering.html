@@ -52,13 +52,14 @@
     <p>FuseZap is a compiler and serving engine for LLM inference. A model is expressed in about 28 primitive operations. The compiler schedules and fuses them into kernels, generates source for the target, and tunes launch parameters with a beam search. The serving layer runs on top of whatever the compiler produces.</p>
     <p>Porting to a new chip means writing one backend. A backend has four parts:</p>
     <ul>
-      <li><b>Renderer:</b> turns our kernel IR into source in your kernel language (a C dialect, or an LLVM or MLIR-level entry point).</li>
+      <li><b>Renderer:</b> turns our kernel IR into source in your kernel language (today a C dialect such as C, Metal or CUDA, or a Python tile language such as Inferentia’s NKI; LLVM- or MLIR-level entry points are possible but not built yet).</li>
       <li><b>Compiler hook:</b> calls your toolchain to build that source into something your chip runs. Builds are cached on disk.</li>
       <li><b>Runtime:</b> loads kernels and launches them through your driver API.</li>
       <li><b>Allocator:</b> device memory through your driver.</li>
     </ul>
-    <p>The backend only needs a way to compile a kernel and a way to launch it, so a functional simulator with the same interface works before silicon exists. On a simulator we prove correctness; performance tuning waits for real hardware.</p>
-    <p>Tuned kernels you already have, such as matmul or attention, plug in through a custom-kernel hook and are called directly instead of generated. Everything above the backend is shared by every chip: the compiler passes, the model code, the serving engine and the tests.</p>
+    <p>The backend only needs a way to compile a kernel and a way to launch it, so a functional simulator with the same interface should work before silicon exists. We’re proving that now on AWS’s Inferentia simulator: individual operations pass, whole models are next. On a simulator we prove correctness; performance tuning waits for real hardware.</p>
+    <p>Four parts get a chip running correctly. Making it fast takes more: on NVIDIA, about 2,000 lines of hand-written CUDA for matrix multiply, attention, normalisation and token selection, plugged in through the custom-kernel hook. We expect every chip to need a handful of tuned kernels like these, ideally ones its maker already has.</p>
+    <p>Tuned kernels you already have, such as matmul or attention, plug in through a custom-kernel hook and are called directly instead of generated. The hook recognises matrix multiply and attention today, and so far it has carried our own kernels rather than a chip maker’s. Everything above the backend is shared by every chip: the compiler passes, the model code, the serving engine and the tests.</p>
 
     <h2 id="vllm">Why not a vLLM plugin?</h2>
     <p>It’s a fair question, and for some teams a plugin is the right answer. vLLM describes itself as running any model on any hardware, and its hardware support is real, but in practice each chip it supports builds on its maker’s own PyTorch or JAX backend and hand-tuned kernels. vLLM’s hardware plugin interface gives you its scheduler, batching and API. What it doesn’t give you is the kernels. Your team still writes and tunes kernels for the operations each model uses, and every time a model introduces a new attention variant, activation or quantization format, that work starts again. You also follow vLLM’s internals, which change often.</p>
@@ -70,11 +71,11 @@
     <table class="etable">
       <thead><tr><th>Capability</th><th>Needed</th><th>Details</th></tr></thead>
       <tbody>
-        <tr><td>Compile</td><td>Required</td><td>Turn generated kernel source (a C dialect, LLVM IR, MLIR or a Python tile language) into something a host process can load, at runtime or ahead of time.</td></tr>
+        <tr><td>Compile</td><td>Required</td><td>Turn generated kernel source (a C dialect or a Python tile language today; LLVM IR or MLIR later) into something a host process can load, at runtime or ahead of time.</td></tr>
         <tr><td>Launch and wait</td><td>Required</td><td>Launch a kernel with buffer addresses and integer arguments, wait for it to finish, and time it.</td></tr>
         <tr><td>Memory</td><td>Required</td><td>Allocate and free device buffers, and copy between host and device.</td></tr>
         <tr><td>Data types</td><td>Required: float32, int32</td><td>float16 or bfloat16 for useful speed; int8 for quantized weights; FP8 where the hardware has it.</td></tr>
-        <tr><td>Operations</td><td>Required</td><td>Elementwise arithmetic and comparisons, exp2, log2, sqrt and sin, and sum and max along an axis. Integer division and modulo for indexing are emulated if missing.</td></tr>
+        <tr><td>Operations</td><td>Required</td><td>Elementwise arithmetic and comparisons, exp2, log2, sqrt and sin, and sum and max along an axis. Integer division and modulo are used for indexing; emulating them on chips without them isn’t built yet.</td></tr>
         <tr><td>Tuned kernels</td><td>Optional</td><td>Your matmul and attention kernels, called through our custom-kernel hook instead of generated ones.</td></tr>
         <tr><td>Scratchpad and barriers</td><td>Optional</td><td>On-chip memory and synchronization, used by the generated kernels when available.</td></tr>
         <tr><td>Memory hierarchy</td><td>Flat device memory today</td><td>Generated kernels assume device memory plus optional on-chip shared memory, as on GPUs. Software-managed scratchpads with explicit DMA and double buffering are being built for Inferentia2 now; we’ll publish what changed.</td></tr>
@@ -87,7 +88,7 @@
     <ul>
       <li><b>Operations:</b> every primitive and composed op is tested against NumPy and PyTorch on four execution tiers (a pure-Python interpreter, NumPy, compiled CPU and Metal).</li>
       <li><b>Training parity:</b> a small GPT trains with losses matching PyTorch within 1e-4 on every tier.</li>
-      <li><b>Models:</b> Qwen2.5-0.5B-Instruct produces 64 greedy tokens identical to Hugging Face Transformers at FP32. Chat templates match Hugging Face for six tokenizers (Qwen2.5, Llama 3.0 to 3.2, Mistral and SmolLM2).</li>
+      <li><b>Models:</b> Qwen2.5-0.5B-Instruct produces 64 greedy tokens identical to Hugging Face Transformers at FP32. Chat templates match Hugging Face for six tokenizers (Qwen2.5, Llama 3.0 to 3.2, Mistral and SmolLM2). Real weights tested end to end so far: Qwen2.5 0.5B and 7B. Llama and Mistral use the same model code but haven’t been run with real weights yet.</li>
       <li><b>7B on NVIDIA:</b> Qwen2.5-7B-Instruct in bf16 on an H100 picks the same next token as the Hugging Face FP32 reference at 99.3% of 1,024 positions (our bar is 99%, and Hugging Face’s own bf16 scores 99.1%).</li>
       <li><b>Batching:</b> 32 concurrent requests each produce tokens bit-identical to running alone, including under chunked prefill and preemption.</li>
       <li><b>API:</b> the server is exercised with OpenAI’s official Python client, including streaming and concurrent streams.</li>
@@ -153,11 +154,13 @@
     </table>
 
     <h2 id="report">Sample qualification report</h2>
-    <p>This is what FuseZap Validate produces after every model, SDK or driver change: <a href="reports/fusezap-sample-qualification-report.pdf">sample report (PDF)</a>. It was generated from our own results on Apple silicon. On your chip, it runs in your CI.</p>
+    <p>This is the report FuseZap Validate is built to produce after every model, SDK or driver change: <a href="reports/fusezap-sample-qualification-report.pdf">sample report (PDF)</a>. The numbers are real, from our own runs on Apple silicon and an NVIDIA H100. Today we assemble it from our test and benchmark runs; generating it automatically in your CI is what we’re building next.</p>
 
     <h2>What isn’t done yet</h2>
     <ul>
-      <li>No custom accelerator backend yet. Today: CPU, Apple Metal and NVIDIA CUDA. AWS Inferentia2 is next, and AMD HIP follows.</li>
+      <li>No custom accelerator backend yet. Today: CPU (as a correctness reference), Apple Metal and NVIDIA CUDA. AWS Inferentia2 is in progress: our code generator passes individual operations on AWS’s simulator; real hardware is next. AMD HIP follows.</li>
+      <li>Validate as a tool that runs on its own in your CI isn’t built yet. Today we run the tests and benchmarks and assemble the report.</li>
+      <li>Only Qwen2.5 weights have been tested end to end. Mixture-of-experts and sliding-window attention aren’t supported yet.</li>
       <li>Still slower than vLLM: 70% of its throughput for one user and 53% at 32 users on the same H100. Generating tokens for many users at once is the main gap.</li>
       <li>Tested up to 7B on a single GPU. Mixture-of-experts and multi-device sharding are not tested yet.</li>
       <li>No prefix caching. Tool calls are rendered into the prompt but not parsed, and logprobs are not returned.</li>
